@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#282b42" />
+  <title>Four Scenes｜一段故事，四個場景</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f8f6f2;
+      --ink: #302f39;
+      --muted: #797783;
+      --line: rgba(58, 53, 70, .14);
+      --banner: rgba(40, 43, 66, .92);
+      --banner-ink: #fff8f0;
+      --rose: #f4dce4;
+      --rose-ink: #713f54;
+      --lavender: #e8e1f4;
+      --lavender-ink: #504369;
+      --sage: #dfeadd;
+      --sage-ink: #365747;
+      --butter: #f5e8c9;
+      --butter-ink: #70572c;
+      --info-bg: rgba(237, 230, 242, .78);
+      --info-ink: #393447;
+      --accent: #b86c8a;
+      --content-width: 1840px;
+      --outer-gutter: clamp(18px, 2vw, 34px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 28px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 4% 25%, rgba(244, 220, 228, .25), transparent 32rem),
+        radial-gradient(ellipse at 93% 60%, rgba(223, 234, 221, .22), transparent 30rem),
+        var(--page);
+      font-family: Inter, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid #a95c7b; outline-offset: 4px; }
+
+    /* Top banner: dark, translucent, and softly blurred. */
+    .hero-banner {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: calc(100% - 24px);
+      margin: 12px auto 0;
+      padding: clamp(25px, 4vw, 54px) clamp(24px, 4vw, 62px);
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 22px;
+      color: var(--banner-ink);
+      background: var(--banner);
+      box-shadow: 0 14px 40px rgba(42, 39, 58, .12);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .hero-banner::before,
+    .hero-banner::after {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(2px);
+    }
+    .hero-banner::before {
+      width: 360px; height: 360px; right: 7%; top: -235px;
+      background: rgba(210, 157, 181, .23);
+    }
+    .hero-banner::after {
+      width: 230px; height: 230px; right: 28%; bottom: -190px;
+      background: rgba(165, 181, 194, .16);
+    }
+    .banner-inner {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      width: min(100%, var(--content-width));
+      margin: 0 auto;
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #e8cbd7;
+      font-size: .76rem;
+      font-weight: 750;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      font-weight: 760;
+      letter-spacing: -.045em;
+      line-height: 1.2;
+    }
+    .banner-description {
+      max-width: 350px;
+      margin: 0 0 4px;
+      color: rgba(255, 248, 240, .78);
+      font-size: .97rem;
+      line-height: 1.8;
+    }
+
+    /* Three-column composition. The left navigation sticks; the information panel does not. */
+    .page-shell {
+      display: grid;
+      grid-template-columns: 164px minmax(0, 1fr) 286px;
+      align-items: start;
+      gap: clamp(18px, 2vw, 32px);
+      width: min(calc(100% - (var(--outer-gutter) * 2)), var(--content-width));
+      margin: 0 auto;
+      padding: 34px 0 74px;
+    }
+    .scene-nav {
+      position: sticky;
+      top: 26px;
+      align-self: start;
+      z-index: 5;
+      padding: 3px 0;
+    }
+    .nav-title {
+      margin: 0 0 15px 5px;
+      color: #77727f;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .scene-links { display: grid; gap: 10px; }
+    .scene-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 12px 12px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      font-size: .88rem;
+      font-weight: 750;
+      line-height: 1.35;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease;
+    }
+    .scene-link:hover { transform: translateX(3px); filter: saturate(1.06); }
+    .scene-link[aria-current="location"] {
+      border-color: rgba(72, 53, 70, .19);
+      box-shadow: 0 6px 17px rgba(54, 45, 64, .10);
+      transform: translateX(3px);
+    }
+    .scene-link .number {
+      display: inline-grid;
+      flex: 0 0 27px;
+      width: 27px;
+      height: 27px;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(255,255,255,.48);
+      font-size: .72rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .scene-link[data-scene="1"] { background: var(--rose); color: var(--rose-ink); }
+    .scene-link[data-scene="2"] { background: var(--lavender); color: var(--lavender-ink); }
+    .scene-link[data-scene="3"] { background: var(--sage); color: var(--sage-ink); }
+    .scene-link[data-scene="4"] { background: var(--butter); color: var(--butter-ink); }
+
+    .story { min-width: 0; }
+    .scene-section {
+      min-height: 540px;
+      padding: 24px 0 58px;
+      scroll-margin-top: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    .scene-section + .scene-section { padding-top: 58px; }
+    .scene-section:last-child { border-bottom: 0; }
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .section-kicker::before {
+      display: inline-block;
+      width: 27px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+      border-radius: 2px;
+    }
+    h2 {
+      margin: 0 0 20px;
+      font-size: clamp(1.65rem, 2.4vw, 2.35rem);
+      font-weight: 760;
+      letter-spacing: -.035em;
+      line-height: 1.35;
+    }
+    .lead {
+      margin: 0 0 22px;
+      color: #4e4a58;
+      font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+      font-weight: 520;
+      line-height: 1.95;
+    }
+    .story p:not(.section-kicker):not(.lead) {
+      max-width: 82ch;
+      margin: 0 0 18px;
+      color: #65616d;
+      font-size: .98rem;
+    }
+    .inline-note {
+      margin: 27px 0 0;
+      padding: 17px 20px;
+      border-left: 3px solid #c58aa2;
+      border-radius: 0 12px 12px 0;
+      color: #5c4b57;
+      background: rgba(244, 220, 228, .43);
+      font-size: .94rem;
+    }
+    .inline-note strong { color: #704156; }
+
+    /* Encyclopedia-like data panel. It stays in normal document flow. */
+    .information {
+      min-width: 0;
+      margin-top: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(85, 70, 104, .12);
+      border-radius: 18px;
+      background: var(--info-bg);
+      color: var(--info-ink);
+      box-shadow: 0 10px 30px rgba(54, 42, 71, .055);
+    }
+    .info-heading {
+      padding: 20px 21px 16px;
+      border-bottom: 1px solid rgba(85, 70, 104, .13);
+      background: rgba(255, 255, 255, .25);
+    }
+    .info-heading p { margin: 0; }
+    .info-heading .info-label {
+      margin-bottom: 4px;
+      color: #7a6c89;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .info-heading h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -.02em;
+    }
+    .info-body { padding: 4px 21px 18px; }
+    .info-row {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(85, 70, 104, .11);
+      font-size: .87rem;
+      line-height: 1.65;
+    }
+    .info-row:last-of-type { border-bottom: 0; }
+    .info-row dt { color: #777080; font-weight: 650; }
+    .info-row dd { margin: 0; color: #3d3948; font-weight: 650; overflow-wrap: anywhere; }
+    .info-footnote {
+      margin: 7px 0 0;
+      padding: 12px 13px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.38);
+      color: #6d6678;
+      font-size: .78rem;
+      line-height: 1.7;
+    }
+
+    .site-footer {
+      padding: 25px var(--outer-gutter) 29px;
+      color: rgba(255, 248, 240, .8);
+      background: #282b42;
+      text-align: center;
+      font-size: .83rem;
+      letter-spacing: .025em;
+    }
+    .site-footer p { margin: 0; }
+    .site-footer strong { color: #fff8f0; font-weight: 700; }
+
+    @media (min-width: 1500px) {
+      .page-shell { grid-template-columns: 178px minmax(0, 1fr) 300px; }
+      .scene-link { padding: 13px 14px; }
+    }
+    @media (max-width: 1050px) {
+      .page-shell { grid-template-columns: 142px minmax(0, 1fr) 245px; gap: 17px; }
+      .scene-link { gap: 7px; padding: 11px 9px; font-size: .82rem; }
+      .information .info-heading { padding-inline: 16px; }
+      .info-body { padding-inline: 16px; }
+      .info-row { grid-template-columns: 62px minmax(0, 1fr); gap: 8px; }
+    }
+    @media (max-width: 790px) {
+      .hero-banner { width: calc(100% - 16px); margin-top: 8px; padding: 26px 23px 28px; border-radius: 17px; }
+      .banner-inner { display: block; }
+      .banner-description { max-width: 55ch; margin-top: 15px; }
+      .page-shell { display: flex; flex-direction: column; gap: 27px; width: calc(100% - 34px); padding-top: 22px; }
+      .scene-nav { position: static; width: 100%; }
+      .nav-title { margin-bottom: 10px; }
+      .scene-links { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+      .scene-link { display: grid; justify-items: start; align-content: start; gap: 8px; min-height: 82px; padding: 10px; border-radius: 12px; font-size: .78rem; }
+      .scene-link:hover, .scene-link[aria-current="location"] { transform: translateY(-2px); }
+      .scene-link .number { width: 24px; height: 24px; flex-basis: 24px; }
+      .story { width: 100%; }
+      .scene-section { min-height: auto; padding: 24px 0 42px; }
+      .scene-section + .scene-section { padding-top: 42px; }
+      .information { width: 100%; margin-top: 0; }
+      .info-row { grid-template-columns: minmax(80px, .42fr) 1fr; }
+    }
+    @media (max-width: 430px) {
+      .hero-banner { padding-inline: 19px; }
+      h1 { font-size: 1.95rem; }
+      .scene-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .scene-link { min-height: 60px; display: flex; align-items: center; }
+      .page-shell { width: calc(100% - 30px); }
+      .lead { font-size: 1.02rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero-banner">
+    <div class="banner-inner">
+      <div>
+        <p class="eyebrow">Field Notes · Four Scenes</p>
+        <h1>一段故事，四個場景</h1>
+      </div>
+      <p class="banner-description">以四個段落整理主題脈絡。點選左側 Scene 按鈕，即可前往對應章節。</p>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <nav class="scene-nav" aria-label="Scene 導覽">
+      <p class="nav-title">Jump to scene</p>
+      <div class="scene-links">
+        <a class="scene-link" data-scene="1" href="#scene-1" aria-current="location">
+          <span class="number">01</span><span>Scene One</span>
+        </a>
+        <a class="scene-link" data-scene="2" href="#scene-2">
+          <span class="number">02</span><span>Scene Two</span>
+        </a>
+        <a class="scene-link" data-scene="3" href="#scene-3">
+          <span class="number">03</span><span>Scene Three</span>
+        </a>
+        <a class="scene-link" data-scene="4" href="#scene-4">
+          <span class="number">04</span><span>Scene Four</span>
+        </a>
+      </div>
+    </nav>
+
+    <article class="story" aria-label="主文">
+      <section class="scene-section" id="scene-1" data-section="1">
+        <p class="section-kicker">Scene 01 · The Beginning</p>
+        <h2>從一個問題開始</h2>
+        <p class="lead">每個值得理解的議題，都有一個起點。先釐清問題，才能知道接下來應該看向哪裡。</p>
+        <p>這裡是第一段主文的示範內容。你可以用它介紹事件的背景、最初的觀察，或讀者需要知道的基本資訊。主文與右側 Information 欄位彼此獨立，適合放置較完整的敘述。</p>
+        <p>版面刻意保留適度的行距與段落間距，讓內容閱讀起來更輕鬆。若要放入圖片、數據圖表或引用資料，也可以直接加入這個區塊，不必改動整體欄位架構。</p>
+        <div class="inline-note"><strong>閱讀提示：</strong> 此處可放一句值得讀者特別注意的摘要、核心問題，或重要的時間節點。</div>
+      </section>
+
+      <section class="scene-section" id="scene-2" data-section="2">
+        <p class="section-kicker">Scene 02 · The Context</p>
+        <h2>把背景與脈絡攤開</h2>
+        <p class="lead">單一事件通常不是孤立發生。補上制度、時間與利害關係人的脈絡，能讓問題變得更清楚。</p>
+        <p>第二個場景可以呈現事件的形成過程，整理不同階段的變化，或說明哪些條件使現況逐漸成形。把一個複雜議題拆成幾個易於理解的段落，也能降低讀者進入主題的門檻。</p>
+        <p>在文字內容較長時，章節標題能提供閱讀定位；左側的 Scene 導覽則讓讀者不必反覆捲動，就可以跳至想看的段落。滾動頁面時，導覽按鈕也會同步標示目前所在章節。</p>
+        <p>此處可以再加入來源連結、簡短的時間軸或其他補充材料。若資料需要註明出處，可將來源安排在段落末尾，維持內容的可查證性。</p>
+      </section>
+
+      <section class="scene-section" id="scene-3" data-section="3">
+        <p class="section-kicker">Scene 03 · The Details</p>
+        <h2>檢視細節與不同觀點</h2>
+        <p class="lead">有了背景之後，接著回到具體證據。把事實、推論與意見分開，有助於建立更可靠的理解。</p>
+        <p>第三個場景適合放入主要分析、比較或細節說明。可以先提出觀察，再呈現支持觀察的資料，最後解釋這些資訊代表什麼。重要的是讓讀者看得出結論如何從證據推導而來。</p>
+        <p>若不同來源對同一件事有不同說法，可以並列呈現並交代差異，而不必急著把所有資訊壓縮成單一答案。清楚說明資料的範圍與限制，也能避免讀者對結果產生過度解讀。</p>
+        <div class="inline-note"><strong>分析重點：</strong> 可在這裡整理最重要的發現、數據或正反觀點，與一般敘述區隔。</div>
+      </section>
+
+      <section class="scene-section" id="scene-4" data-section="4">
+        <p class="section-kicker">Scene 04 · The Takeaway</p>
+        <h2>回到結論與下一步</h2>
+        <p class="lead">最後不只是重述前文，而是把證據帶回最初的問題，說明目前能得出什麼結論，以及仍有哪些值得追問的地方。</p>
+        <p>第四個場景可用來整理全文的核心發現、後續影響或可採取的行動。結論應該能夠回應開頭提出的問題，同時保留必要的條件與限制。</p>
+        <p>如果這是一份專題、人物介紹或研究整理，也可以在此加入延伸閱讀、參考資料與聯絡方式。讀者讀完主文後，便能依照自己的興趣繼續探索。</p>
+        <p>四個場景的標題、內文與右側資訊都可以直接替換。若需要更多章節，複製一個 section、增加對應的導覽連結，再更新章節編號即可。</p>
+      </section>
+    </article>
+
+    <aside class="information" aria-labelledby="information-title">
+      <div class="info-heading">
+        <p class="info-label">At a glance</p>
+        <h2 id="information-title">Information</h2>
+      </div>
+      <div class="info-body">
+        <dl>
+          <div class="info-row"><dt>主題</dt><dd>專題／人物名稱</dd></div>
+          <div class="info-row"><dt>類型</dt><dd>深度整理</dd></div>
+          <div class="info-row"><dt>章節</dt><dd>4 Scenes</dd></div>
+          <div class="info-row"><dt>關鍵字</dt><dd>背景、分析、觀點</dd></div>
+          <div class="info-row"><dt>更新日期</dt><dd>2026 年 10 月</dd></div>
+          <div class="info-row"><dt>撰寫者</dt><dd>在此填入姓名</dd></div>
+        </dl>
+        <p class="info-footnote">右側資訊欄採一般文件流排版，捲動頁面時會自然離開畫面，不會固定跟隨視窗。</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Four Scenes</strong>　·　以清楚的結構，呈現完整的故事。</p>
+  </footer>
+
+  <script>
+    // Scroll to the matching scene and keep the corresponding button highlighted.
+    const sceneLinks = [...document.querySelectorAll('.scene-link')];
+    const sceneSections = [...document.querySelectorAll('.scene-section')];
+
+    function setActiveScene(sceneNumber) {
+      sceneLinks.forEach((link) => {
+        if (link.dataset.scene === String(sceneNumber)) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    sceneLinks.forEach((link) => {
+      link.addEventListener('click', () => setActiveScene(link.dataset.scene));
+    });
+
+    if ('IntersectionObserver' in window) {
+      const sceneObserver = new IntersectionObserver((entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visibleEntries.length) {
+          setActiveScene(visibleEntries[0].target.dataset.section);
+        }
+      }, {
+        // The middle band of the viewport determines which scene is active.
+        rootMargin: '-22% 0px -57% 0px',
+        threshold: [0, 0.15, 0.35, 0.6]
+      });
+      sceneSections.forEach((section) => sceneObserver.observe(section));
+    }
+  </script>
+</body>
+</html>
