@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08090c" />
+  <title>向下 — 暗色敘事網頁</title>
+  <style>
+    :root {
+      --bg: #08090c;
+      --paper: #e7e3dd;
+      --muted: #8b8989;
+      --dim: #55565b;
+      --accent: #aa8273;
+      --line: rgba(231, 227, 221, .14);
+      --ease: cubic-bezier(.22, .72, .18, 1);
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--bg);
+      font-family: Inter, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      overflow-x: hidden;
+      scrollbar-color: #55515a #090a0d;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      opacity: .13;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+    .story-scroll { position: relative; height: 600vh; }
+    .stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      min-height: 570px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(ellipse at 39% 48%, rgba(57, 52, 60, .21), transparent 44%),
+        linear-gradient(112deg, #0b0c10 0%, #08090c 57%, #0c0b0e 100%);
+    }
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 7;
+      background: linear-gradient(90deg, transparent 0%, rgba(8,9,12,.06) 52%, rgba(8,9,12,.34) 100%);
+    }
+    .topbar {
+      position: absolute;
+      z-index: 8;
+      top: 27px;
+      left: 4.5vw;
+      right: 4.5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #a8a4a0;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .brand-mark { width: 17px; height: 17px; border: 1px solid #9a7b70; transform: rotate(45deg); position: relative; }
+    .brand-mark::after { content: ""; position: absolute; inset: 4px; background: #9a7b70; }
+    .top-right { display: flex; gap: 22px; align-items: center; }
+    .top-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px rgba(170,130,115,.55); }
+
+    .slide-main {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(300px, .82fr);
+      align-items: center;
+      gap: clamp(34px, 5vw, 90px);
+      padding: 8.8vh 8.6vw 7vh 8.6vw;
+      z-index: 3;
+      transition: opacity .55s var(--ease), transform .75s var(--ease), filter .55s var(--ease);
+    }
+    .visual-wrap {
+      position: relative;
+      width: 100%;
+      height: min(66vh, 690px);
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(1.2vw);
+    }
+    .visual-frame {
+      position: relative;
+      width: min(100%, 650px);
+      height: auto;
+      aspect-ratio: 5 / 4;
+      max-height: 100%;
+      overflow: hidden;
+      background: #17171c;
+      border: 1px solid rgba(218,207,195,.2);
+      box-shadow: 0 30px 90px rgba(0,0,0,.35), 0 0 0 7px rgba(255,255,255,.012);
+      isolation: isolate;
+    }
+    .visual-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(7,8,11,.04) 15%, rgba(7,8,11,.02) 50%, rgba(7,8,11,.6) 100%), linear-gradient(90deg, rgba(6,7,10,.3), transparent 65%);
+      box-shadow: inset 0 0 80px rgba(0,0,0,.36);
+    }
+    .visual-frame::after {
+      content: "IMAGE PLACEHOLDER";
+      position: absolute;
+      left: 22px;
+      bottom: 19px;
+      z-index: 4;
+      color: rgba(231,227,221,.44);
+      font: 9px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .23em;
+    }
+    .visual-frame.image-loaded::after { display: none; }
+    .art.image-art {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .art.image-art::before, .art.image-art::after { display: none !important; }
+    .art {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background-color: #15151a;
+      transition: background .6s ease;
+    }
+    .art::before, .art::after { content: ""; position: absolute; display: block; }
+    .art-01 {
+      background: radial-gradient(ellipse at 56% 34%, rgba(118,79,71,.52), transparent 4%, transparent 18%), radial-gradient(ellipse at 58% 33%, #553c3c 0%, #2a252c 17%, transparent 43%), linear-gradient(180deg, #1a1b22 0%, #2b252b 49%, #121318 100%);
+    }
+    .art-01::before { left: -8%; right: -8%; bottom: 15%; height: 25%; background: #111318; clip-path: polygon(0 65%, 14% 44%, 25% 55%, 36% 20%, 48% 47%, 64% 32%, 75% 57%, 88% 38%, 100% 58%, 100% 100%, 0 100%); }
+    .art-01::after { width: 1px; height: 84%; left: 58%; top: 5%; background: rgba(218,188,167,.22); box-shadow: -130px 80px 0 rgba(218,188,167,.08), 95px 20px 0 rgba(218,188,167,.1); }
+    .art-02 {
+      background: radial-gradient(ellipse at 48% 39%, rgba(156,156,163,.5), transparent 5%, transparent 25%), linear-gradient(130deg, #25252c 0%, #15171e 42%, #0b1017 100%);
+    }
+    .art-02::before { inset: 8% 13%; border: 1px solid rgba(184,190,197,.22); transform: perspective(600px) rotateY(-12deg); box-shadow: 0 0 55px rgba(142,157,168,.07), inset 0 0 45px rgba(0,0,0,.7); }
+    .art-02::after { width: 36%; height: 120%; left: 32%; top: -8%; background: linear-gradient(90deg, transparent, rgba(157,165,175,.11), transparent); transform: skewX(-13deg); }
+    .art-03 {
+      background: radial-gradient(circle at 64% 30%, #b3a9a0 0%, #756c6b 3%, rgba(91,87,93,.58) 12%, transparent 28%), linear-gradient(180deg, #26252d 0%, #4a444a 50%, #16171c 100%);
+    }
+    .art-03::before { left: -10%; right: -10%; height: 45%; bottom: -3%; background: linear-gradient(160deg, #242329, #111217); clip-path: polygon(0 70%, 19% 41%, 31% 56%, 48% 23%, 61% 49%, 72% 36%, 100% 66%, 100% 100%, 0 100%); }
+    .art-03::after { left: 0; right: 0; bottom: 42%; height: 1px; background: rgba(229,219,211,.15); box-shadow: 0 12px 38px 15px rgba(199,184,176,.07); }
+    .art-04 {
+      background: radial-gradient(ellipse at 50% 60%, rgba(107,76,90,.43), transparent 30%), linear-gradient(140deg, #17151d, #28222d 52%, #0c0e13);
+    }
+    .art-04::before { inset: -18% 18%; border-left: 1px solid rgba(197,169,183,.28); border-right: 1px solid rgba(197,169,183,.13); transform: rotate(17deg); box-shadow: 55px 0 0 rgba(197,169,183,.03), -55px 0 0 rgba(197,169,183,.03); }
+    .art-04::after { width: 7%; height: 65%; top: 16%; left: 49%; background: linear-gradient(180deg, transparent, rgba(195,158,174,.2), transparent); filter: blur(6px); transform: rotate(17deg); }
+    .art-05 {
+      background: radial-gradient(ellipse at 37% 40%, rgba(108,115,96,.4), transparent 28%), linear-gradient(155deg, #1d211e, #111513 60%, #080a0c);
+    }
+    .art-05::before { left: 20%; right: 17%; bottom: 0; height: 67%; background: linear-gradient(90deg, #101310, #252925 48%, #111411); clip-path: polygon(20% 0, 74% 0, 100% 100%, 0 100%); opacity: .9; }
+    .art-05::after { left: 48%; top: 0; height: 86%; width: 1px; background: rgba(194,190,165,.17); box-shadow: 70px 65px 0 rgba(194,190,165,.06), -60px 30px 0 rgba(194,190,165,.08); }
+    .art-06 {
+      background: radial-gradient(ellipse at 50% 45%, rgba(133,111,94,.4), transparent 5%, transparent 27%), linear-gradient(180deg, #17171b, #272329 51%, #08090c 100%);
+    }
+    .art-06::before { width: 42%; height: 42%; left: 29%; top: 27%; border: 1px solid rgba(192,168,146,.24); transform: rotate(45deg); box-shadow: 0 0 50px rgba(173,133,108,.09), inset 0 0 35px rgba(173,133,108,.04); }
+    .art-06::after { width: 1px; height: 100%; left: 50%; top: 0; background: linear-gradient(transparent, rgba(192,168,146,.28), transparent); }
+    .art-index { position: absolute; right: 22px; top: 19px; z-index: 4; color: rgba(231,227,221,.56); font: 10px ui-monospace, monospace; letter-spacing: .18em; }
+    .frame-corner { position: absolute; z-index: 5; width: 18px; height: 18px; border-color: rgba(205,174,157,.64); border-style: solid; pointer-events: none; }
+    .frame-corner.tl { top: -5px; left: -5px; border-width: 1px 0 0 1px; }
+    .frame-corner.br { right: -5px; bottom: -5px; border-width: 0 1px 1px 0; }
+
+    .copy {
+      max-width: 450px;
+      padding: 1vh 0 0;
+      transform: translateY(1.2vh);
+    }
+    .chapter-label { display: flex; align-items: center; gap: 13px; margin-bottom: clamp(22px, 3.8vh, 38px); color: #b99a8c; font: 10px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .2em; text-transform: uppercase; }
+    .chapter-label::before { content: ""; width: 28px; height: 1px; background: #997366; }
+    h1 { margin: 0 0 25px; font-size: clamp(34px, 3.8vw, 59px); line-height: 1.22; font-weight: 400; letter-spacing: .06em; color: #e6e0da; }
+    .story-copy { max-width: 370px; margin: 0; color: #9e9a9b; font-size: clamp(13px, 1.05vw, 15px); line-height: 2.15; letter-spacing: .055em; font-weight: 300; }
+    .copy-rule { margin: 35px 0 19px; width: 100%; max-width: 290px; height: 1px; background: linear-gradient(90deg, rgba(174,138,122,.55), transparent); }
+    .copy-bottom { display: flex; justify-content: space-between; max-width: 300px; color: #5e5d62; font: 9px ui-monospace, monospace; letter-spacing: .16em; }
+    .copy-bottom span:last-child { color: #8a7268; }
+
+    .scene-number {
+      position: absolute;
+      z-index: -1;
+      right: -1.8vw;
+      bottom: -10vh;
+      color: rgba(225,218,209,.025);
+      font: 400 clamp(180px, 27vw, 410px)/.8 Georgia, serif;
+      letter-spacing: -.09em;
+      pointer-events: none;
+    }
+
+    .ghost {
+      position: absolute;
+      z-index: 2;
+      left: 9.5vw;
+      width: clamp(190px, 28vw, 380px);
+      height: 33vh;
+      min-height: 160px;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .85s var(--ease), opacity .7s var(--ease), filter .7s var(--ease);
+      filter: grayscale(.65) blur(.8px);
+    }
+    .ghost .ghost-frame { position: relative; height: 100%; width: 100%; overflow: hidden; border: 1px solid rgba(218,207,195,.12); box-shadow: 0 12px 35px rgba(0,0,0,.25); }
+    .ghost .ghost-art { position: absolute; inset: 0; }
+    .ghost .ghost-caption { position: absolute; left: 15px; bottom: 12px; z-index: 2; color: rgba(231,227,221,.56); font: 9px ui-monospace, monospace; letter-spacing: .16em; }
+    .ghost-prev { top: 0; transform: translateY(-84%) scale(.83); transform-origin: 50% 100%; }
+    .ghost-next { bottom: 0; transform: translateY(84%) scale(.83); transform-origin: 50% 0%; }
+    .ghost.visible { opacity: .34; filter: grayscale(.75) blur(.6px); }
+    .ghost-prev.visible { transform: translateY(-48%) scale(.78); }
+    .ghost-next.visible { transform: translateY(48%) scale(.78); }
+
+    .side-index {
+      position: absolute;
+      z-index: 8;
+      right: 4.4vw;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: #777278;
+      font: 9px ui-monospace, monospace;
+      letter-spacing: .12em;
+    }
+    .index-line { position: relative; width: 1px; height: 66px; background: rgba(231,227,221,.15); overflow: hidden; }
+    .index-fill { display: block; width: 100%; height: 16.66%; background: #a17a6b; transition: height .5s ease; }
+    .side-index strong { font-size: 11px; color: #c6b3a7; font-weight: 400; }
+    .scroll-hint { position: absolute; z-index: 8; left: 4.5vw; bottom: 27px; display: flex; align-items: center; gap: 12px; color: #777278; font: 9px ui-monospace, monospace; letter-spacing: .18em; }
+    .scroll-arrow { width: 23px; height: 23px; border: 1px solid rgba(231,227,221,.2); border-radius: 50%; display: grid; place-items: center; color: #bd9b8a; font-size: 12px; animation: breathe 2.2s ease-in-out infinite; }
+    .scroll-hint.is-end { opacity: .36; }
+    @keyframes breathe { 0%,100% { transform: translateY(0); opacity: .75; } 50% { transform: translateY(4px); opacity: 1; } }
+
+    .stage[data-changing="true"] .slide-main { opacity: .24; transform: translateY(13px); filter: blur(3px); }
+    .stage[data-changing="true"] .visual-frame { transform: scale(.985); }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 900px) {
+      .slide-main { grid-template-columns: minmax(0, 1.05fr) minmax(250px, .85fr); gap: 4vw; padding-left: 6vw; padding-right: 8vw; }
+      .visual-wrap { height: 59vh; transform: none; }
+      .ghost { left: 6vw; }
+      .side-index { right: 2.5vw; }
+      h1 { font-size: clamp(30px, 4.7vw, 45px); }
+    }
+    @media (max-width: 640px) {
+      .stage { min-height: 630px; }
+      .topbar { top: 19px; left: 6vw; right: 6vw; font-size: 8px; }
+      .top-right { gap: 10px; }
+      .top-right span:first-child { display: none; }
+      .slide-main { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 70px 9vw 63px; }
+      .visual-wrap { width: 84%; height: 41vh; min-height: 260px; margin-left: -8%; }
+      .copy { width: 82%; align-self: flex-end; padding: 0; transform: none; margin-top: -2vh; }
+      .chapter-label { margin-bottom: 12px; font-size: 9px; }
+      h1 { font-size: clamp(27px, 8vw, 38px); margin-bottom: 11px; }
+      .story-copy { font-size: 12px; line-height: 1.85; }
+      .copy-rule { margin: 17px 0 11px; }
+      .copy-bottom { max-width: 100%; }
+      .ghost { left: 8vw; width: 48vw; height: 20vh; min-height: 105px; }
+      .ghost-prev.visible { transform: translateY(-35%) scale(.72); }
+      .ghost-next.visible { transform: translateY(35%) scale(.72); }
+      .side-index { right: 4vw; top: 40%; }
+      .index-line { height: 42px; }
+      .scroll-hint { left: 6vw; bottom: 18px; font-size: 8px; }
+      .scene-number { bottom: -3vh; right: -2vw; font-size: 56vw; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="story-scroll" id="storyScroll" aria-label="向下敘事網頁原型">
+    <section class="stage" id="stage" aria-live="polite">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>VISUAL STORY / STUDY 04</span></div>
+        <div class="top-right"><span>AN EXPERIMENT IN DARKNESS</span><span class="top-dot" aria-hidden="true"></span><span id="topChapter">CHAPTER 01</span></div>
+      </header>
+
+      <div class="ghost ghost-prev" id="ghostPrev" aria-hidden="true"><div class="ghost-frame"><div class="ghost-art art art-01" id="prevArt"></div><span class="ghost-caption" id="prevCaption">01 / PREVIOUS TRACE</span></div></div>
+      <div class="ghost ghost-next visible" id="ghostNext" aria-hidden="true"><div class="ghost-frame"><div class="ghost-art art art-02" id="nextArt"></div><span class="ghost-caption" id="nextCaption">02 / NEXT TRACE</span></div></div>
+
+      <article class="slide-main" id="activeSlide">
+        <div class="visual-wrap">
+          <div class="visual-frame" id="visualFrame">
+            <div class="art art-01" id="activeArt"></div>
+            <span class="art-index" id="artIndex">FIG. 01</span>
+            <span class="frame-corner tl" aria-hidden="true"></span>
+            <span class="frame-corner br" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="copy" id="copyBlock">
+          <div class="chapter-label" id="chapterLabel">CHAPTER 01 / PROLOGUE</div>
+          <h1 id="sceneTitle">故事，從黑暗裡開始</h1>
+          <p class="story-copy" id="sceneCopy">這裡先放一段暫定文字。等你決定故事主題後，可以把它改成旁白、事件描述，或一段刻意留白的句子。畫面會隨著捲動切換，文字也會一起變得清晰。</p>
+          <div class="copy-rule"></div>
+          <div class="copy-bottom"><span id="copyMeta">IMAGE STUDY — 01</span><span id="copyStatus">待替換內容</span></div>
+        </div>
+        <span class="scene-number" id="sceneNumber" aria-hidden="true">01</span>
+      </article>
+
+      <aside class="side-index" aria-label="故事進度">
+        <strong id="currentIndex">01</strong>
+        <span class="index-line"><i class="index-fill" id="indexFill"></i></span>
+        <span id="totalIndex">06</span>
+      </aside>
+      <div class="scroll-hint" id="scrollHint"><span class="scroll-arrow" aria-hidden="true">↓</span><span>SCROLL TO DESCEND</span></div>
+    </section>
+  </main>
+  <script>
+    // 每幕圖片只要放進 images/，並命名 scene-01.png、scene-02.png……即可自動載入。
+    // 不需要每次新增圖片就修改圖片路徑；只需把相同編號的 PNG 放進 images 資料夾。
+    const scenes = [
+      {
+        number: '01', label: 'CHAPTER 01 / PROLOGUE', title: '故事，從黑暗裡開始', // 圖片放在 as04/images/scene-01.png
+        copy: '這裡先放一段暫定文字。等你決定故事主題後，可以把它改成旁白、事件描述，或一段刻意留白的句子。畫面會隨著捲動切換，文字也會一起變得清晰。',
+        art: 'art-01', meta: 'IMAGE STUDY — 01', status: '圖片已放入'
+      },
+      {
+        number: '02', label: 'CHAPTER 02 / THE THRESHOLD', title: '有些事，正在發生', // 圖片放在 as04/images/scene-02.png
+        copy: '第二幕的文字占位。當這一幕成為主畫面，前一幕會退到上方，縮小、褪色；下一幕則從下方若隱若現地浮現。',
+        art: 'art-02', meta: 'IMAGE STUDY — 02', status: '圖片已放入'
+      },
+      {
+        number: '03', label: 'CHAPTER 03 / THE SILENCE', title: '沉默並不代表平靜',
+        copy: '第三幕的文字占位。這裡可以描述一個場景、一個物件的運作方式，或故事裡逐漸浮現的線索。',
+        art: 'art-03', meta: 'IMAGE STUDY — 03', status: '待替換內容'
+      },
+      {
+        number: '04', label: 'CHAPTER 04 / THE FRACTURE', title: '裂縫開始擴大',
+        copy: '第四幕的文字占位。每次向下捲動，圖片和文字會成套切換；前後兩幕以低彩度、低透明度的方式留在畫面邊緣。',
+        art: 'art-04', meta: 'IMAGE STUDY — 04', status: '待替換內容'
+      },
+      {
+        number: '05', label: 'CHAPTER 05 / THE DEPTH', title: '越往下，越看不清楚',
+        copy: '第五幕的文字占位。正式製作時，可以讓六至八張圖有各自的視覺重點，但統一色調與構圖節奏，讓它們看起來屬於同一個故事。',
+        art: 'art-05', meta: 'IMAGE STUDY — 05', status: '待替換內容'
+      },
+      {
+        number: '06', label: 'CHAPTER 06 / AFTERIMAGE', title: '最後留下的，是痕跡',
+        copy: '最後一幕的文字占位。走到這裡，前方不再有下一張圖；你也可以在正式版本中用一個收束句，讓故事停在最適合的位置。',
+        art: 'art-06', meta: 'IMAGE STUDY — 06', status: '待替換內容'
+      }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const stage = $('stage');
+    const els = {
+      topChapter: $('topChapter'), activeArt: $('activeArt'), artIndex: $('artIndex'), visualFrame: $('visualFrame'),
+      chapterLabel: $('chapterLabel'), sceneTitle: $('sceneTitle'), sceneCopy: $('sceneCopy'),
+      copyMeta: $('copyMeta'), copyStatus: $('copyStatus'), sceneNumber: $('sceneNumber'),
+      currentIndex: $('currentIndex'), totalIndex: $('totalIndex'), indexFill: $('indexFill'),
+      ghostPrev: $('ghostPrev'), ghostNext: $('ghostNext'), prevArt: $('prevArt'), nextArt: $('nextArt'),
+      prevCaption: $('prevCaption'), nextCaption: $('nextCaption'), scrollHint: $('scrollHint')
+    };
+    let activeIndex = -1;
+    let scrollQueued = false;
+    els.totalIndex.textContent = String(scenes.length).padStart(2, '0');
+    $('storyScroll').style.height = `${scenes.length * 100}vh`; // 場景數量改變時，自動調整捲動長度
+
+    function setArtClass(element, artClass) {
+      element.className = element.className.replace(/\bart-0[1-6]\b/g, '').trim();
+      element.classList.add(artClass);
+    }
+    // 自動尋找 images/scene-編號.png。圖片還沒放入或路徑錯誤時，保留原本的抽象占位圖。
+    let artRequestId = 0;
+    function setSceneArt(element, scene) {
+      const requestToken = String(++artRequestId);
+      element.dataset.sceneRequest = requestToken;
+      element.className = 'art';
+      element.style.backgroundImage = '';
+      element.classList.add(scene.art);
+      if (element.id === 'activeArt') els.visualFrame.classList.remove('image-loaded');
+
+      const imagePath = scene.image || `images/scene-${scene.number}.png`;
+      const imageProbe = new Image();
+      imageProbe.onload = () => {
+        if (element.dataset.sceneRequest !== requestToken) return;
+        element.className = 'art image-art';
+        element.style.backgroundImage = `url("${imagePath}")`;
+        if (element.id === 'activeArt') els.visualFrame.classList.add('image-loaded');
+      };
+      imageProbe.onerror = () => {
+        if (element.dataset.sceneRequest !== requestToken) return;
+        element.className = 'art';
+        element.style.backgroundImage = '';
+        element.classList.add(scene.art);
+        if (element.id === 'activeArt') els.visualFrame.classList.remove('image-loaded');
+      };
+      imageProbe.src = imagePath;
+    }
+    function renderScene(index) {
+      if (index === activeIndex) return;
+      activeIndex = index;
+      const scene = scenes[index];
+      stage.dataset.changing = 'true';
+      window.setTimeout(() => {
+        els.topChapter.textContent = `CHAPTER ${scene.number}`;
+        setSceneArt(els.activeArt, scene);
+        els.artIndex.textContent = `FIG. ${scene.number}`;
+        els.chapterLabel.textContent = scene.label;
+        els.sceneTitle.textContent = scene.title;
+        els.sceneCopy.textContent = scene.copy;
+        els.copyMeta.textContent = scene.meta;
+        els.copyStatus.textContent = scene.status;
+        els.sceneNumber.textContent = scene.number;
+        els.currentIndex.textContent = scene.number;
+        els.indexFill.style.height = `${((index + 1) / scenes.length) * 100}%`;
+
+        if (index > 0) {
+          const prev = scenes[index - 1];
+          setSceneArt(els.prevArt, prev);
+          els.prevCaption.textContent = `${prev.number} / PREVIOUS TRACE`;
+          els.ghostPrev.classList.add('visible');
+        } else {
+          els.ghostPrev.classList.remove('visible');
+        }
+        if (index < scenes.length - 1) {
+          const next = scenes[index + 1];
+          setSceneArt(els.nextArt, next);
+          els.nextCaption.textContent = `${next.number} / NEXT TRACE`;
+          els.ghostNext.classList.add('visible');
+          els.scrollHint.classList.remove('is-end');
+          els.scrollHint.querySelector('span:last-child').textContent = 'SCROLL TO DESCEND';
+        } else {
+          els.ghostNext.classList.remove('visible');
+          els.scrollHint.classList.add('is-end');
+          els.scrollHint.querySelector('span:last-child').textContent = 'END OF CURRENT STORY';
+        }
+        requestAnimationFrame(() => stage.dataset.changing = 'false');
+      }, 130);
+    }
+    function updateFromScroll() {
+      const vh = window.innerHeight || 1;
+      const index = Math.max(0, Math.min(scenes.length - 1, Math.round(window.scrollY / vh)));
+      renderScene(index);
+      scrollQueued = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!scrollQueued) {
+        scrollQueued = true;
+        requestAnimationFrame(updateFromScroll);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', updateFromScroll);
+    renderScene(0);
+  </script>
+</body>
+</html>
