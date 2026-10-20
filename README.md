@@ -1,1 +1,472 @@
-# elliotchiu.github.io
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <meta name="description" content="Elliot Chiu 的個人網站、作品紀錄與學習筆記。">
+  <title>Elliot Chiu — Personal Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f7f5f0;
+      --white: #fffcf7;
+      --ink: #343434;
+      --soft-ink: #5e5d59;
+      --muted: #8a8984;
+      --line: #dcd9d2;
+      --line-dark: #bcb9b1;
+      --silver: #e6e7e6;
+      --accent: #84817c;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "DM Sans", "Noto Sans TC", sans-serif;
+      --radius: 2px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.8;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    :focus-visible { outline: 2px solid #777570; outline-offset: 3px; }
+    .container { width: min(1360px, calc(100% - 104px)); margin-inline: auto; }
+
+    /* ── Masthead ── */
+    .masthead { border-bottom: 1px solid var(--line); background: var(--white); }
+    .masthead__top {
+      height: 106px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .wordmark { font: 700 clamp(28px, 3.1vw, 42px)/1 var(--sans); letter-spacing: -.075em; }
+    .wordmark__dot { color: #a8a6a0; }
+    .masthead__detail { text-align: right; color: var(--muted); font: 500 11px/1.9 var(--sans); letter-spacing: .19em; }
+    .masthead__detail strong { display: block; font-weight: 600; color: var(--soft-ink); }
+
+    /* ── One-line segmented navigation ── */
+    .nav-rail { border-bottom: 1px solid var(--line-dark); background: #f0efeb; }
+    .nav-items { display: flex; align-items: stretch; width: 100%; overflow-x: auto; scrollbar-width: thin; }
+    .nav-items::-webkit-scrollbar { height: 3px; }
+    .nav-items::-webkit-scrollbar-thumb { background: #c1beb8; }
+    .nav-button {
+      display: flex; flex: 1 0 0; min-width: 150px; align-items: center; justify-content: space-between;
+      border: 0; border-left: 1px solid var(--line); background: transparent; color: #6b6a67;
+      padding: 18px 22px; text-align: left; font-size: 13px; letter-spacing: .07em;
+      cursor: pointer; transition: background .2s, color .2s;
+    }
+    .nav-button:last-child { border-right: 1px solid var(--line); }
+    .nav-button:hover { background: #e8e6e1; color: var(--ink); }
+    .nav-button.is-active { background: #444441; color: white; }
+    .nav-button__num { font-size: 10px; opacity: .57; margin-left: 14px; }
+
+    /* ── About section ── */
+    .hero { padding: 80px 0 86px; border-bottom: 1px solid var(--line-dark); }
+    .hero-grid { display: grid; grid-template-columns: minmax(210px, 276px) minmax(0,1fr); column-gap: clamp(56px, 8.5vw, 138px); }
+    .profile-side { display: flex; flex-direction: column; align-items: flex-start; }
+    .avatar-shell {
+      width: min(100%, 235px); aspect-ratio: 1; border: 1px solid #d3d0cb; border-radius: 50%;
+      padding: 10px; background: var(--white); box-shadow: 0 12px 25px -25px #444;
+    }
+    .avatar {
+      width: 100%; height: 100%; border-radius: 50%; overflow: hidden; display: grid; place-items: center;
+      background: radial-gradient(circle at 27% 17%, #f2f2f0, #dadbd9 57%, #b9bab8);
+      color: #72736f; font: italic 400 64px/1 var(--serif); letter-spacing: -.08em;
+    }
+    .avatar img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .profile-caption { font-size: 10px; color: var(--muted); letter-spacing: .2em; margin: 22px 0 34px; }
+    .info-panel { width: 100%; padding-top: 18px; border-top: 1px solid var(--line-dark); }
+    .eyebrow { margin: 0; color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .21em; }
+    .info-row { border-bottom: 1px solid var(--line); padding: 19px 0 17px; }
+    .info-row__label { font-size: 10px; letter-spacing: .12em; color: var(--muted); margin-bottom: 5px; }
+    .info-row__value { color: var(--soft-ink); font-size: 12px; line-height: 1.9; white-space: pre-line; }
+
+    .hero-content { padding-top: 8px; min-width: 0; }
+    .hero-content__overline { display: flex; align-items: center; gap: 17px; }
+    .hero-content__overline::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+    .hero-title { font-size: clamp(44px, 5.2vw, 79px); line-height: 1.38; font-weight: 500; letter-spacing: -.07em; margin: 40px 0 32px; }
+    .hero-title em { font-style: normal; color: #8d8c87; }
+    .hero-description { max-width: 660px; font-size: 16px; color: var(--soft-ink); line-height: 2.2; letter-spacing: .02em; white-space: pre-line; }
+    .status-line { display: flex; align-items: baseline; gap: 19px; margin-top: 40px; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .status-line__label { white-space: nowrap; font-size: 11px; color: var(--muted); letter-spacing: .16em; }
+    .status-line__text { font-size: 13px; color: var(--ink); }
+    .status-dot { display: inline-block; width: 6px; height: 6px; background: #98988e; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+    .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 33px; }
+    .text-link { display: inline-flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--ink); font-size: 12px; font-weight: 600; letter-spacing: .08em; }
+    .text-link--secondary { color: var(--muted); border-color: var(--line-dark); }
+    .text-link:hover { color: #777; border-color: #777; }
+
+    /* ── Portfolio ── */
+    .portfolio { padding: 80px 0 115px; scroll-margin-top: 30px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 22px; margin-bottom: 34px; }
+    .section-title { font-size: clamp(30px, 3.4vw, 49px); line-height: 1.3; font-weight: 500; letter-spacing: -.06em; margin: 11px 0 0; }
+    .section-meta { color: var(--muted); font-size: 12px; white-space: nowrap; letter-spacing: .05em; }
+    .portfolio-rule { height: 1px; background: var(--line-dark); margin-bottom: 0; }
+    .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .work-card {
+      min-width: 0; display: flex; flex-direction: column;
+      padding: 25px 22px 24px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      transition: background .25s;
+    }
+    .work-card:nth-child(3n+1) { border-left: 1px solid var(--line); }
+    .work-card:hover { background: #eeece7; }
+    .work-card:focus-visible { outline-offset: -4px; }
+    .work-card:hover .cover-art__image { transform: scale(1.05); }
+    .work-card:hover .card-arrow { transform: translate(3px, -3px); }
+    .cover-art {
+      position: relative; isolation: isolate; overflow: hidden; width: 100%; aspect-ratio: 5 / 4;
+      background: #d2d1cd; display: flex; align-items: end; padding: 25px;
+    }
+    .cover-art::before, .cover-art::after { content: ""; position: absolute; z-index: -1; pointer-events: none; }
+    .cover-art--stone { background: linear-gradient(130deg, #ebe9e4 0%, #b3b3b0 100%); }
+    .cover-art--stone::before { width: 68%; aspect-ratio: 1; border: 1px solid rgba(65,65,65,.2); border-radius: 50%; top: -35%; right: -8%; box-shadow: 0 0 0 42px rgba(255,255,255,.09),0 0 0 87px rgba(255,255,255,.07); }
+    .cover-art--stone::after { width: 33%; height: 84%; background: rgba(249,248,244,.45); top: 0; left: 23%; transform: skew(-16deg); }
+    .cover-art--fog { background: linear-gradient(140deg,#c4c6c6,#e5e4df 55%,#aaa9a5); }
+    .cover-art--fog::before { width: 72%; height: 80%; top: 11%; left: 12%; border: 1px solid #f4f2ed; transform: rotate(-17deg); }
+    .cover-art--fog::after { width: 67%; height: 90%; top: 30%; right: -11%; border: 1px solid rgba(80,80,80,.25); transform: rotate(22deg); }
+    .cover-art--sand { background: linear-gradient(135deg,#ded8cc,#bdb5aa); }
+    .cover-art--sand::before { width: 70%; aspect-ratio: 1; background: #ede8e0; border-radius: 50%; top: -27%; left: -15%; }
+    .cover-art--sand::after { width: 47%; aspect-ratio: 1; border: 35px solid #a39f98; border-radius: 50%; bottom: -44%; right: -7%; opacity: .65; }
+    .cover-art--ink { background: linear-gradient(125deg,#4d5354,#909494); }
+    .cover-art--ink::before { width: 75%; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; top: -48%; left: 20%; box-shadow: 0 0 0 45px rgba(255,255,255,.05), 0 0 0 100px rgba(255,255,255,.035); }
+    .cover-art--ink::after { width: 100%; height: 30%; background: rgba(255,255,255,.1); bottom: 15%; transform: skewY(-13deg); }
+    .cover-art--linen { background: linear-gradient(150deg,#ebe8e1,#c9c6bd); }
+    .cover-art--linen::before { width: 200%; height: 1px; background: rgba(90,90,90,.22); top: 45%; left: -20%; transform: rotate(-20deg); box-shadow: 0 32px 0 rgba(90,90,90,.18),0 -32px 0 rgba(90,90,90,.18); }
+    .cover-art--linen::after { width: 46%; height: 61%; border: 1px solid rgba(255,255,255,.85); right: 12%; top: 15%; transform: rotate(13deg); }
+    .cover-art__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .45s; z-index: 0; }
+    .cover-art__label { position: absolute; left: 23px; top: 21px; z-index: 1; font-size: 10px; font-weight: 600; letter-spacing: .21em; color: #575856; }
+    .cover-art--ink .cover-art__label { color: #fff; }
+    .cover-art__title { position: relative; z-index: 1; font: italic 400 clamp(52px, 5.3vw, 86px)/1 var(--serif); color: rgba(57,60,59,.66); letter-spacing: -.06em; }
+    .cover-art--ink .cover-art__title { color: rgba(255,255,255,.82); }
+    .cover-art.has-image .cover-art__label, .cover-art.has-image .cover-art__title { display: none; }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 22px 0 12px; font-size: 10px; color: #8a8983; letter-spacing: .13em; }
+    .card-meta__category { color: #696863; }
+    .card-title { font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; font-weight: 600; letter-spacing: -.04em; margin: 0; }
+    .card-description { margin: 12px 0 26px; font-size: 12px; line-height: 1.9; color: #76746f; flex-grow: 1; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--line); color: #8d8b85; font-size: 11px; }
+    .card-arrow { display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: var(--ink); transition: transform .25s; }
+    .empty-state { border: 1px solid var(--line); text-align: center; padding: 65px 20px; color: var(--muted); font-size: 13px; }
+    .empty-state[hidden] { display: none; }
+
+    /* ── Footer ── */
+    .footer { background: #eae9e5; border-top: 1px solid var(--line-dark); }
+    .footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 32px 0; }
+    .footer-inner span { font-size: 11px; letter-spacing: .1em; color: #797873; }
+    .footer-name { font-weight: 600; color: var(--ink) !important; }
+    @media (max-width: 1050px) {
+      .container { width: min(100% - 72px, 1300px); }
+      .hero-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 54px; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .work-card:nth-child(3n+1) { border-left: none; }
+      .work-card:nth-child(2n+1) { border-left: 1px solid var(--line); }
+    }
+    @media (max-width: 720px) {
+      .container { width: calc(100% - 38px); }
+      .masthead__top { height: 83px; }
+      .wordmark { font-size: 30px; }
+      .masthead__detail { font-size: 9px; }
+      .nav-button { flex: 0 0 auto; min-width: 134px; padding: 15px 17px; font-size: 12px; }
+      .hero { padding: 42px 0 54px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .profile-side { display: grid; grid-template-columns: 132px minmax(0, 1fr); align-items: start; column-gap: 19px; }
+      .avatar-shell { width: 132px; grid-column: 1; grid-row: 1; padding: 5px; }
+      .avatar { font-size: 42px; }
+      .profile-caption { grid-column: 1; grid-row: 2; margin: 10px 0 0; font-size: 8px; }
+      .info-panel { grid-column: 2; grid-row: 1 / 3; border-top: none; padding-top: 0; }
+      .info-row { padding: 7px 0 9px; }
+      .info-row__value { font-size: 11px; }
+      .hero-title { font-size: clamp(40px, 9.5vw, 59px); margin: 25px 0 21px; }
+      .hero-description { font-size: 14px; }
+      .status-line { margin-top: 27px; gap: 13px; flex-wrap: wrap; }
+      .portfolio { padding: 53px 0 75px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .work-card { border-left: 1px solid var(--line) !important; padding: 19px 17px 24px; }
+      .cover-art { padding: 22px; }
+      .cover-art__title { font-size: 75px; }
+      .card-title { font-size: 20px; }
+      .section-heading { align-items: start; }
+      .section-meta { padding-top: 18px; font-size: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="container masthead__top">
+      <a href="./" class="wordmark" aria-label="Elliot Chiu 首頁">elliot chiu<span class="wordmark__dot">.</span></a>
+      <div class="masthead__detail"><strong>PERSONAL ARCHIVE</strong>WRITING / PROJECTS / IDEAS</div>
+    </div>
+  </header>
+
+  <nav class="nav-rail" aria-label="網站分類">
+    <div class="container nav-items">
+      <button class="nav-button is-active" type="button" data-filter="all" aria-pressed="true">全部作品 <span class="nav-button__num">01</span></button>
+      <button class="nav-button" type="button" data-filter="web" aria-pressed="false">網頁設計 <span class="nav-button__num">02</span></button>
+      <button class="nav-button" type="button" data-filter="personal" aria-pressed="false">個人專案 <span class="nav-button__num">03</span></button>
+      <button class="nav-button" type="button" data-scroll="about" aria-pressed="false">關於我 <span class="nav-button__num">04</span></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="about" aria-label="個人介紹">
+      <div class="container hero-grid">
+        <aside class="profile-side">
+          <div class="avatar-shell">
+            <div class="avatar" id="avatar"><span id="avatarInitials">EC</span></div>
+          </div>
+          <p class="profile-caption">A PERSON BEHIND THE WORK</p>
+          <div class="info-panel">
+            <p class="eyebrow">EDUCATION & EXPERIENCE</p>
+            <div class="info-row">
+              <div class="info-row__label">學歷 / EDUCATION</div>
+              <div class="info-row__value" id="education"></div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">經歷 / EXPERIENCE</div>
+              <div class="info-row__value" id="experience"></div>
+            </div>
+            <div class="info-row">
+              <div class="info-row__label">關注 / INTERESTS</div>
+              <div class="info-row__value" id="interests"></div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="hero-content">
+          <div class="hero-content__overline"><p class="eyebrow">ABOUT ME & WHAT I DO</p></div>
+          <h1 class="hero-title" id="heroTitle">把觀察寫成故事，<br><em>讓想法成為作品。</em></h1>
+          <div class="hero-description" id="heroDescription"></div>
+          <div class="status-line">
+            <span class="status-line__label">CURRENTLY</span>
+            <span class="status-line__text"><span class="status-dot"></span><span id="currentStatus"></span></span>
+          </div>
+          <div class="hero-actions">
+            <a class="text-link" href="#works">瀏覽我的作品 <span aria-hidden="true">↗</span></a>
+            <a class="text-link text-link--secondary" href="https://github.com/elliotchiu17" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio" id="works" aria-label="作品與連結">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">AN ONGOING COLLECTION</p>
+            <h2 class="section-title" id="worksHeading">作品與紀錄<span style="color:#aaa7a0">.</span></h2>
+          </div>
+          <span class="section-meta" id="workCount">00 ENTRIES</span>
+        </div>
+        <div class="portfolio-rule"></div>
+        <div class="card-grid" id="cardGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>目前這個分類還沒有作品，之後會慢慢更新。</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-name">ELLIOT CHIU © <span id="year"></span></span>
+      <span>CURATED WITH CURIOSITY, BUILT TO KEEP GROWING.</span>
+      <a href="#" class="text-link text-link--secondary" style="font-size:10px">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════════════
+       【編輯區 A】個人介紹：只需要修改引號裡面的文字。
+       大頭照：把檔案上傳到 GitHub 儲存庫根目錄，例如 profile.jpg，
+       再把 photo: "" 改成 photo: "profile.jpg"。
+       多行文字可以用 `反引號` 包起來。
+       ═══════════════════════════════════════════════════════════════════ */
+    const profile = {
+      initials: "EC",
+      photo: "",                          // 範例："profile.jpg"
+      headlineFirst: "把觀察寫成故事，",
+      headlineSecond: "讓想法成為作品。",
+      introduction: `你好，我是 Elliot。這裡收藏我的網頁創作、學習筆記與一些持續發展中的想法。\n\n我喜歡從不同領域尋找連結，也相信好的內容，值得用好的方式呈現。`,
+      status: "持續學習網頁敘事、財金與公共議題",
+      education: `國立臺灣大學｜財務金融學系\n跨領域學習`,
+      experience: `網站敘事與內容企劃\n議題研究及社群溝通`,
+      interests: `網頁設計、故事敘事\n金融、社會與公共議題`
+    };
+
+    /* ═══════════════════════════════════════════════════════════════════
+       【編輯區 B】作品清單：每增加一個作品，複製一組 { ... }, 即可。
+       date      日期 YYYY-MM-DD（自動由新到舊排序）
+       category  "web"=網頁設計，"personal"=個人專案
+       url       網站網址，可用 "as06/" 或完整 https://... 網址
+       image     預覽圖片路徑，例如 "images/as06.jpg"；留空會顯示銀灰封面
+       style     留空封面樣式：stone / fog / sand / ink / linen
+       short     封面大字（沒有圖片時顯示）
+       ═══════════════════════════════════════════════════════════════════ */
+    const works = [
+      {
+        title: "AS05｜個人網站練習",
+        description: "一個關於個人資訊與網頁呈現方式的練習頁面。此處文字可自由修改。",
+        date: "2026-10-20",
+        category: "personal",
+        url: "as05/",
+        image: "",
+        style: "stone",
+        short: "05"
+      },
+      {
+        title: "AS04｜滾動敘事",
+        description: "以捲動、段落及視覺節奏，練習讓文字與畫面共同說故事。",
+        date: "2026-10-14",
+        category: "web",
+        url: "as04/",
+        image: "",
+        style: "ink",
+        short: "04"
+      },
+      {
+        title: "AS03｜網頁敘事作業",
+        description: "課程中的設計實驗與敘事呈現，探索媒體內容的不同可能。",
+        date: "2026-10-08",
+        category: "web",
+        url: "as03/",
+        image: "",
+        style: "sand",
+        short: "03"
+      },
+      {
+        title: "AS02｜互動版面設計",
+        description: "從基本的 HTML 與 CSS 出發，建立更清楚的資訊與段落配置。",
+        date: "2026-10-02",
+        category: "web",
+        url: "as02/",
+        image: "",
+        style: "fog",
+        short: "02"
+      },
+      {
+        title: "Practice W4｜設計實作",
+        description: "嘗試把設計想法轉譯為可操作的網頁，記錄一次創作過程。",
+        date: "2026-09-26",
+        category: "web",
+        url: "practicew4/",
+        image: "",
+        style: "linen",
+        short: "W4"
+      }
+    ];
+
+    /* ═══ 以下是自動排版程式：日後新增作品不需要修改這一區 ═══ */
+    const categoryNames = { web: "WEB DESIGN", personal: "PERSONAL PROJECT" };
+    const allowedStyles = new Set(["stone", "fog", "sand", "ink", "linen"]);
+    const avatar = document.getElementById("avatar");
+    document.getElementById("avatarInitials").textContent = profile.initials;
+    if (profile.photo.trim()) {
+      const img = document.createElement("img");
+      img.src = profile.photo;
+      img.alt = "Elliot 的大頭照";
+      img.addEventListener("load", () => avatar.replaceChildren(img));
+    }
+    document.getElementById("heroTitle").replaceChildren(
+      document.createTextNode(profile.headlineFirst), document.createElement("br"),
+      Object.assign(document.createElement("em"), { textContent: profile.headlineSecond })
+    );
+    for (const [id, value] of Object.entries({
+      heroDescription: profile.introduction,
+      currentStatus: profile.status,
+      education: profile.education,
+      experience: profile.experience,
+      interests: profile.interests
+    })) document.getElementById(id).textContent = value;
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const orderedWorks = works.map((work, index) => ({ ...work, _index: index }))
+      .sort((a, b) => b.date.localeCompare(a.date) || a._index - b._index);
+    const cardGrid = document.getElementById("cardGrid");
+    const workCount = document.getElementById("workCount");
+    const emptyState = document.getElementById("emptyState");
+    const worksHeading = document.getElementById("worksHeading");
+
+    function renderWorks(filter = "all") {
+      const shown = filter === "all" ? orderedWorks : orderedWorks.filter(item => item.category === filter);
+      cardGrid.replaceChildren();
+      worksHeading.textContent = filter === "all" ? "作品與紀錄." : filter === "web" ? "網頁設計." : "個人專案.";
+      workCount.textContent = `${String(shown.length).padStart(2, "0")} ENTRIES`;
+      emptyState.hidden = shown.length > 0;
+
+      shown.forEach((item, index) => {
+        const card = document.createElement("a");
+        card.className = "work-card";
+        card.href = item.url;
+        card.setAttribute("aria-label", `前往 ${item.title}`);
+        // 外部網址開新分頁；本站子頁留在同分頁，可用瀏覽器上一頁返回。
+        if (/^https?:\/\//i.test(item.url)) { card.target = "_blank"; card.rel = "noopener noreferrer"; }
+
+        const cover = document.createElement("div");
+        const chosenStyle = allowedStyles.has(item.style) ? item.style : "stone";
+        cover.className = `cover-art cover-art--${chosenStyle}`;
+        const label = document.createElement("span");
+        label.className = "cover-art__label";
+        label.textContent = categoryNames[item.category] || "SELECTED WORK";
+        const bigText = document.createElement("span");
+        bigText.className = "cover-art__title";
+        bigText.textContent = item.short || String(index + 1).padStart(2, "0");
+        cover.append(label, bigText);
+        if (item.image && item.image.trim()) {
+          const img = document.createElement("img");
+          img.className = "cover-art__image";
+          img.src = item.image;
+          img.alt = `${item.title} 的預覽圖`;
+          img.loading = "lazy";
+          img.addEventListener("load", () => cover.classList.add("has-image"));
+          cover.append(img);
+        }
+
+        const meta = document.createElement("div");
+        meta.className = "card-meta";
+        const category = document.createElement("span");
+        category.className = "card-meta__category";
+        category.textContent = categoryNames[item.category] || "PROJECT";
+        const number = document.createElement("span");
+        number.textContent = `NO. ${String(index + 1).padStart(2, "0")}`;
+        meta.append(category, number);
+        const title = document.createElement("h3");
+        title.className = "card-title";
+        title.textContent = item.title;
+        const desc = document.createElement("p");
+        desc.className = "card-description";
+        desc.textContent = item.description;
+        const bottom = document.createElement("div");
+        bottom.className = "card-bottom";
+        const date = document.createElement("time");
+        date.dateTime = item.date;
+        date.textContent = item.date.replaceAll("-", ".");
+        const arrow = document.createElement("span");
+        arrow.className = "card-arrow";
+        arrow.textContent = "↗";
+        arrow.setAttribute("aria-hidden", "true");
+        bottom.append(date, arrow);
+        card.append(cover, meta, title, desc, bottom);
+        cardGrid.append(card);
+      });
+    }
+    renderWorks();
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+      button.addEventListener("click", () => {
+        if (button.dataset.scroll) {
+          document.getElementById(button.dataset.scroll).scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+        document.querySelectorAll(".nav-button[data-filter]").forEach(other => {
+          const active = other === button;
+          other.classList.toggle("is-active", active);
+          other.setAttribute("aria-pressed", String(active));
+        });
+        renderWorks(button.dataset.filter);
+        document.getElementById("works").scrollIntoView({ behavior: "smooth" });
+      });
