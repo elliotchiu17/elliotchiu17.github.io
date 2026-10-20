@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="社群帳號與詐騙話術的數位觀察誌，一份互動式網頁設計與敘事練習。">
+<title>螢幕背後｜社群詐騙觀察誌</title>
+<style>
+:root{--ivory:#fcfaf3;--cream:#f5edcf;--yellow:#eddca1;--ink:#292c27;--mute:#7d7a6b;--line:#d9d0b5;--rust:#985e45;--green:#4c604d;--nav-h:76px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 14px)}body{margin:0;color:var(--ink);background:var(--ivory);font-family:Arial,'Noto Sans TC','Microsoft JhengHei',sans-serif;line-height:1.85}a{color:inherit}button{font:inherit}::selection{background:#e7d18c;color:#292c27}.container{width:min(1180px,calc(100% - 72px));margin-inline:auto}.serif{font-family:Georgia,'Noto Serif TC','PMingLiU',serif}.eyebrow{font-size:.73rem;letter-spacing:.22em;font-weight:700;text-transform:uppercase}.topline{background:#343b31;color:#f9f3df;letter-spacing:.15em;font-size:.71rem}.topline .container{display:flex;justify-content:space-between;gap:16px;padding:7px 0}.hero{position:relative;overflow:hidden;background:linear-gradient(130deg,#f7f1dd 0%,#eadba8 100%);border-bottom:1px solid var(--line)}.hero::before{content:'';position:absolute;inset:-15% -5%;opacity:.27;background:radial-gradient(circle at 70% 60%,#fff8d6 0 10%,transparent 40%),repeating-linear-gradient(95deg,transparent 0 36px,#fff 37px 38px)}.hero-inner{position:relative;min-height:470px;padding:87px 0 66px;display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}.hero h1{font-size:clamp(3.3rem,8.3vw,7.1rem);font-weight:600;line-height:1.11;letter-spacing:-.055em;margin:14px 0 22px}.hero h1 span{display:block;color:var(--rust)}.hero-lead{font-size:1.08rem;max-width:520px;line-height:2;color:#55584a}.hero-illustration{aspect-ratio:1/1;position:relative;max-width:370px;width:100%;justify-self:center;border:1px solid #7c775f;border-radius:49% 49% 10px 10px;transform:rotate(5deg);background:linear-gradient(160deg,#fdf9e9,#d3be85);box-shadow:18px 22px 0 #c9b78455;display:grid;place-items:center}.hero-illustration::after{content:'ISSUE  01  /  DIGITAL CULTURE';font:600 10px Arial;letter-spacing:.13em;position:absolute;bottom:17px}.phone{width:55%;aspect-ratio:.66;border:8px solid #34382f;border-radius:28px;background:#fffdf6;transform:rotate(-11deg);box-shadow:8px 10px 0 #a3987790;overflow:hidden;padding:15px 13px}.phone-notch{height:6px;width:44%;border-radius:5px;background:#34382f;margin:-6px auto 17px}.profile{display:flex;gap:8px;align-items:center;border-bottom:1px solid #dfdac9;padding-bottom:12px}.avatar{height:29px;aspect-ratio:1;border-radius:50%;background:#c87960}.bars{flex:1;display:grid;gap:6px}.bars i{display:block;height:6px;border-radius:6px;background:#ddd7bd}.bars i:nth-child(2){width:55%}.post{margin-top:14px;height:40%;background:linear-gradient(135deg,#c2c5a8,#a8ad8a);border-radius:5px;display:grid;place-items:center;color:white;font:500 54px Georgia}.caption-bars{display:grid;gap:7px;margin-top:12px}.caption-bars i{height:6px;background:#e3decf;border-radius:4px}.caption-bars i:nth-child(2){width:72%}.nav{position:sticky;top:0;z-index:40;background:#fcfaf3ef;backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}.nav.scrolled{box-shadow:0 6px 24px #24291d16}.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:var(--nav-h)}.brand{font-family:Georgia,'Noto Serif TC',serif;font-weight:700;letter-spacing:.09em;text-decoration:none;white-space:nowrap;font-size:1.08rem}.navlinks{display:flex;gap:clamp(9px,2.2vw,32px);align-items:center}.navlinks a{font-size:.86rem;text-decoration:none;position:relative;color:#66695f;white-space:nowrap;transition:color .2s}.navlinks a::after{content:'';position:absolute;bottom:-7px;left:0;width:0;height:2px;background:var(--rust);transition:width .2s}.navlinks a:hover,.navlinks a:focus-visible,.navlinks a.active{color:var(--rust)}.navlinks a:hover::after,.navlinks a:focus-visible::after,.navlinks a.active::after{width:100%}.navlinks .backtop{font-size:1.1rem}.intro{padding:94px 0 106px;display:grid;grid-template-columns:1fr 2fr;gap:8%;align-items:start}.intro h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.35;margin:14px 0}.intro p{font-size:1.09rem;line-height:2.15;margin:0 0 17px}.rule{height:1px;background:var(--line);width:100%;margin-top:28px}.chapter-banner{position:relative;scroll-margin-top:var(--nav-h);overflow:hidden;background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.chapter-banner::before{content:'';width:45%;position:absolute;right:-12%;top:-210%;aspect-ratio:1;border:1px solid #ffffffa6;border-radius:50%;box-shadow:0 0 0 65px #ffffff30,0 0 0 125px #ffffff29}.chapter-banner:nth-of-type(2n){background:#dfe2d2}.chapter-banner-inner{position:relative;min-height:270px;padding:50px 0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}.chapter-number{color:var(--rust)}.chapter-banner h2{font-size:clamp(2.45rem,6vw,5rem);line-height:1.24;letter-spacing:-.035em;margin:16px 0}.chapter-banner p{font-size:1rem;color:#5c6356;max-width:690px;margin:0}.chapter-content{padding:78px 0 108px}.article-top{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2.3fr);gap:8%;align-items:start}.article-meta{border-top:3px solid var(--ink);padding-top:20px;color:var(--mute);font-size:.88rem}.article-meta strong{display:block;font:600 1.35rem Georgia,serif;color:var(--ink);margin-bottom:10px}.article-copy{max-width:780px}.article-copy h3{font:600 clamp(1.7rem,3.6vw,2.6rem)/1.4 Georgia,'Noto Serif TC',serif;margin:0 0 22px;letter-spacing:-.02em}.article-copy p{margin:0 0 21px;font-size:1.04rem;line-height:2.17}.pullquote{padding:18px 24px;margin:32px 0;border-left:3px solid var(--rust);background:#f6f0dd;color:#756047;font:italic 1.35rem/1.75 Georgia,'Noto Serif TC',serif}.gallery{width:min(100%,990px);margin:51px auto 58px;display:flex;align-items:flex-start;justify-content:center;gap:clamp(15px,3vw,36px)}.gallery figure{margin:0;min-width:0;flex:1;max-width:460px;text-align:center}.image-stage{height:320px;display:flex;align-items:center;justify-content:center;padding:4px}.image-stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:1px solid #d1c6aa;box-shadow:0 13px 24px #27291c14;background:#efe8d2}.gallery figcaption{font-size:.8rem;color:#777768;text-align:left;line-height:1.7;padding-top:16px;border-top:1px solid var(--line);margin-top:17px}.gallery figcaption::before{content:'圖說  /  ';font-weight:700;color:var(--rust)}.figure-empty{height:250px;display:grid;place-items:center;background:#f1ead5;border:1px dashed #b1a380;color:#897f60}.editor-note{margin:30px auto 0;font-size:.83rem;color:var(--mute);text-align:center}.end-line{display:flex;align-items:center;gap:14px;color:var(--rust);font:italic 1rem Georgia;margin:62px 0 0}.end-line::after{content:'';height:1px;flex:1;background:var(--line)}.footer{background:#343b31;color:#faf7eb;padding:70px 0 35px}.footer h2{font:500 clamp(2.4rem,5vw,4rem) Georgia,'Noto Serif TC',serif;margin:0 0 15px}.footer p{color:#d3d7c6;max-width:650px}.footer-bottom{display:flex;justify-content:space-between;gap:16px;border-top:1px solid #ffffff38;margin-top:62px;padding-top:20px;font-size:.78rem;letter-spacing:.06em}.scroll-cue{margin-top:30px;font-size:.75rem;letter-spacing:.14em}.scroll-cue::before{content:'↓';margin-right:12px;font-size:1.4rem;vertical-align:middle}@media(max-width:750px){:root{--nav-h:65px}.container{width:min(100% - 36px,1180px)}.topline{font-size:.59rem}.hero-inner{grid-template-columns:1fr;min-height:0;padding:67px 0 75px}.hero h1{font-size:clamp(3.5rem,12vw,5rem)}.hero-illustration{max-width:230px;margin:10px 0 0;justify-self:end}.nav-inner{flex-wrap:wrap;gap:0;justify-content:center;padding:10px 0;min-height:unset}.brand{width:100%;text-align:center;font-size:.97rem}.navlinks{width:100%;justify-content:space-between;gap:8px;margin-top:6px}.navlinks a{font-size:.72rem}.intro{grid-template-columns:1fr;gap:22px;padding:65px 0}.chapter-banner-inner{min-height:230px;padding:38px 0}.chapter-content{padding:56px 0 75px}.article-top{grid-template-columns:1fr;gap:27px}.article-meta{padding-top:12px}.gallery{gap:16px;margin:34px auto 43px}.image-stage{height:260px}.gallery figcaption{font-size:.7rem}.footer-bottom{flex-direction:column}}@media(max-width:480px){.gallery{flex-direction:column;align-items:center;gap:30px}.gallery figure{width:100%;max-width:400px}.image-stage{height:auto;min-height:150px;max-height:380px}.image-stage img{max-height:370px}.topline .container span:last-child{display:none}.hero-illustration{max-width:185px}.intro p,.article-copy p{font-size:1rem}.navlinks a{font-size:.67rem}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="topline"><div class="container"><span>AN ONLINE EDITORIAL ABOUT DIGITAL DECEPTION</span><span>VOL. 01 · 2026</span></div></div>
+<header class="hero" id="home"><div class="container hero-inner"><div><span class="eyebrow">DIGITAL FIELD NOTES · 社群觀察特刊</span><h1 class="serif">螢幕<span>背後。</span></h1><p class="hero-lead">一個頭像、一則私訊、一份看似真誠的邀請。當社群帳號不再只是帳號，我們該如何辨認螢幕另一端的意圖？</p><div class="scroll-cue">SCROLL TO EXPLORE</div></div><div class="hero-illustration" aria-hidden="true"><div class="phone"><div class="phone-notch"></div><div class="profile"><div class="avatar"></div><div class="bars"><i></i><i></i></div></div><div class="post">?</div><div class="caption-bars"><i></i><i></i><i></i></div></div></div></div></header>
+<nav class="nav" id="site-nav" aria-label="章節導覽"><div class="container nav-inner"><a class="brand" href="#home">BEHIND THE SCREEN.</a><div class="navlinks"><a class="backtop" href="#home" aria-label="回到首頁">⌂</a><a href="#chapter-1">01 假冒帳號</a><a href="#chapter-2">02 投資群組</a><a href="#chapter-3">03 釣魚私訊</a></div></div></nav>
+<main><section class="container intro"><div><div class="eyebrow">EDITOR'S NOTE</div><h2 class="serif">真實與偽裝，<br>只有一線之隔。</h2><div class="rule"></div></div><div><p>我們每天滑過數不清的社群貼文。那些看似熟悉的頭像、熱心的推薦與緊急的通知，有時只需要幾個細節，就能讓一場詐騙顯得像日常對話。</p><p>本頁是《網頁設計與敘事》課程的示範作品。以下三個章節提供可自由改寫的觀察方向；圖片與案例均為版面展示用途，並非真實案件證據。</p></div></section><div id="chapters"></div></main>
+<footer class="footer"><div class="container"><span class="eyebrow">A FINAL NOTE</span><h2>保持好奇，也保持查證。</h2><p>資訊可以被複製，信任不該被輕易借走。遇到不尋常的連結與投資邀約，請先停下來確認來源。</p><div class="footer-bottom"><span>BEHIND THE SCREEN. / DIGITAL FIELD NOTES</span><span>WEB DESIGN & STORYTELLING · AS05</span></div></div></footer>
+<script>
+/* ====================================================================
+   ✏️ 只需要修改這個「內容資料區」，不用去調整 HTML / CSS 版面。
+   一個 chapter 的 images 可以寫：[]、[一張]、[兩張]，或更多張。
+   src: 圖片網址，或同資料夾的檔名（例如 "images/photo1.jpg"）。
+   ratio: "1:1"（方形）或 "5:4"（社群貼文），只有使用示範圖時才需要。
+   caption: 圖片下方的新聞式附註文字。
+   兩張不同長寬的圖會以「圖片本身的垂直中心線」對齊，不必改程式。
+   ==================================================================== */
+const chapters = [
+  {
+    id: 'chapter-1', number: '01', nav: '假冒帳號',
+    title: '熟悉的面孔，陌生的訊息',
+    subtitle: 'IDENTITY IMITATION / 當名稱、照片與認證感都可以被模仿',
+    kicker: 'CHAPTER ONE · 身分偽裝',
+    headline: '看起來一模一樣，就是真的嗎？',
+    paragraphs: [
+      '有些可疑帳號會使用與公眾人物、品牌或熟人相近的名稱、照片與版面。第一眼看去，差異可能只藏在多一個底線、少一個字母，或近期才建立的帳號資訊裡。',
+      '觀察這類帳號時，可以從名稱拼寫、過往貼文、互動模式與官方公開管道交叉比對。若對方突然要求轉帳或提供驗證碼，更應該提高警覺。'
+    ],
+    quote: '熟悉的頭像，只是一個訊號；不是可信任的證明。',
+    images: [
+      {src: '', ratio:'1:1', kind:'identity', caption:'示意圖 A｜相近的個人檔案設計，可能增加辨識難度。'},
+      {src: '', ratio:'5:4', kind:'clone', caption:'示意圖 B｜觀察帳號名稱、貼文時間與對話引導的細節。'}
+    ],
+    ending: 'NEXT / CHAPTER 02'
+  },
+  {
+    id: 'chapter-2', number: '02', nav: '投資群組',
+    title: '快速致富的群組邀請',
+    subtitle: 'INVESTMENT BAIT / 高報酬敘事背後的社交工程',
+    kicker: 'CHAPTER TWO · 投資誘惑',
+    headline: '當「大家都賺錢」成為最有力的話術',
+    paragraphs: [
+      '陌生人邀請加入投資群組，群組裡充滿感謝老師、貼出獲利截圖的訊息。當許多聲音同時保證某個機會可靠，真正值得提問的，或許是這些聲音是否來自不同的人。',
+      '觀察者可以留意群組是否要求私下匯款、下載不明投資程式，或刻意營造「再不加入就錯過」的時間壓力。正常的金融風險，不會因為群組裡的掌聲而消失。'
+    ],
+    quote: '比起保證報酬，更應該問：風險被放在哪裡？',
+    images: [
+      {src: '', ratio:'5:4', kind:'group', caption:'示意圖｜以聊天介面展示群組成員接連附和的情境。'}
+    ],
+    ending: 'NEXT / CHAPTER 03'
+  },
+  {
+    id: 'chapter-3', number: '03', nav: '釣魚私訊',
+    title: '一則通知，一個陌生連結',
+    subtitle: 'PHISHING LINKS / 危機感、限時與驗證要求',
+    kicker: 'CHAPTER THREE · 連結陷阱',
+    headline: '「請立即驗證」，為何讓人來不及多想？',
+    paragraphs: [
+      '「帳號即將停用」「包裹無法配送」「你獲得抽獎資格」等字句，都可能被用來製造緊迫感。若訊息附有陌生連結，對方可能期待你在確認網址前就按下去。',
+      '辨認此類訊息時，重點不只是看有沒有官方標誌，也要檢查網址網域、要求輸入的資訊，並改從自己熟悉的官方 App 或網站重新登入確認。'
+    ],
+    quote: '真正重要的通知，值得你多花十秒鐘查證。',
+    images: [
+      {src: '', ratio:'1:1', kind:'notice', caption:'示意圖 A｜使用緊急語氣的警示訊息。'},
+      {src: '', ratio:'5:4', kind:'link', caption:'示意圖 B｜遇到網址與品牌名稱不一致時，應提高警覺。'}
+    ],
+    ending: 'END / STAY CURIOUS'
+  }
+];
+/* ====== 內容資料區結束；下方是自動排版程式，原則上不用改 ====== */
+const esc = value => String(value ?? '').replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+// 不須網路連線的編輯示範圖；填入 src 後就自動改成你的真實圖片。
+function placeholderSvg(kind, ratio) {
+ const square = ratio === '1:1', w=640,h=square?640:512;
+ const heading={identity:'PROFILE CHECK',clone:'IDENTITY COPY',group:'GROUP MESSAGE',notice:'URGENT NOTICE',link:'CHECK THE LINK'}[kind]||'SOCIAL NOTE';
+ const art={
+ identity:`<circle cx="320" cy="270" r="104" fill="#c4b38b"/><circle cx="320" cy="244" r="36" fill="#f8f3e3"/><path d="M245 340 Q320 270 395 340" fill="#f8f3e3"/><rect x="144" y="405" width="352" height="13" rx="7" fill="#aea385"/><rect x="198" y="434" width="245" height="10" rx="5" fill="#d0c2a1"/>`,
+ clone:`<rect x="78" y="145" width="218" height="240" rx="14" fill="#fbf8ee"/><rect x="343" y="145" width="218" height="240" rx="14" fill="#fbf8ee"/><circle cx="187" cy="217" r="42" fill="#bdad8a"/><circle cx="452" cy="217" r="42" fill="#bdad8a"/><rect x="111" y="296" width="152" height="13" rx="6" fill="#d7ccb3"/><rect x="376" y="296" width="152" height="13" rx="6" fill="#d7ccb3"/><path d="M310 250 L330 250 M320 240 L320 260" stroke="#9b5e47" stroke-width="5"/>`,
+ group:`<rect x="120" y="112" width="400" height="300" rx="18" fill="#fcfaf4"/><circle cx="163" cy="163" r="22" fill="#c8b995"/><rect x="204" y="143" width="255" height="32" rx="12" fill="#e9e5d5"/><circle cx="477" cy="234" r="22" fill="#b6c5a9"/><rect x="213" y="216" width="230" height="33" rx="12" fill="#d4dfcb"/><circle cx="163" cy="303" r="22" fill="#c8b995"/><rect x="204" y="283" width="270" height="32" rx="12" fill="#e9e5d5"/><rect x="204" y="329" width="185" height="14" rx="7" fill="#e9e5d5"/>`,
+ notice:`<circle cx="320" cy="265" r="127" fill="#efe0b8" stroke="#ab7357" stroke-width="3"/><path d="M320 171 L415 335 H225 Z" fill="#b47755"/><rect x="313" y="231" width="14" height="55" rx="7" fill="#fff9e7"/><circle cx="320" cy="307" r="8" fill="#fff9e7"/>`,
+ link:`<rect x="83" y="168" width="474" height="193" rx="15" fill="#fbf9ee"/><rect x="108" y="194" width="424" height="29" rx="7" fill="#e5e0cd"/><circle cx="131" cy="209" r="7" fill="#bc825f"/><rect x="150" y="202" width="274" height="13" rx="6" fill="#bfc3a9"/><path d="M233 270 H405" stroke="#b2aa91" stroke-width="15" stroke-linecap="round"/><path d="M290 319 H349" stroke="#a66d51" stroke-width="12" stroke-linecap="round"/>`
+ }[kind]||'';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 640 ${h}"><rect width="640" height="${h}" fill="#e9e2cc"/><rect x="20" y="20" width="600" height="${h-40}" fill="none" stroke="#b8af92"/><text x="54" y="74" font-family="Georgia" font-size="19" letter-spacing="4" fill="#6d6959">FIELD NOTES / SAMPLE</text>${art}<text x="320" y="${h-55}" text-anchor="middle" font-family="Georgia" font-size="23" letter-spacing="4" fill="#655e4b">${heading}</text></svg>`;
+ return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+function renderImage(img,i){const src=img.src?.trim()||placeholderSvg(img.kind,img.ratio);return `<figure><div class="image-stage"><img src="${esc(src)}" alt="${esc(img.alt||img.caption||'章節示意圖片')}" loading="lazy"></div><figcaption>${esc(img.caption||'')}</figcaption></figure>`}
+function renderChapter(c){return `<section class="chapter" aria-labelledby="${esc(c.id)}-heading"><header class="chapter-banner" id="${esc(c.id)}"><div class="container chapter-banner-inner"><span class="eyebrow chapter-number">CHAPTER ${esc(c.number)} / ${esc(c.kicker)}</span><h2 class="serif" id="${esc(c.id)}-heading">${esc(c.title)}</h2><p>${esc(c.subtitle)}</p></div></header><div class="container chapter-content"><div class="article-top"><aside class="article-meta"><strong>0${Number(c.number)}</strong><span>${esc(c.kicker)}</span><div class="rule"></div></aside><div class="article-copy"><h3>${esc(c.headline)}</h3>${c.paragraphs.map(p=>`<p>${esc(p)}</p>`).join('')}${c.quote?`<blockquote class="pullquote">「${esc(c.quote)}」</blockquote>`:''}</div></div>${c.images?.length?`<div class="gallery" aria-label="${esc(c.nav)}圖片集">${c.images.map(renderImage).join('')}</div>`:''}<div class="end-line">${esc(c.ending)}</div></div></section>`}
+document.getElementById('chapters').innerHTML=chapters.map(renderChapter).join('');
+const nav=document.getElementById('site-nav');
+function updateNavHeight(){document.documentElement.style.setProperty('--nav-h',nav.offsetHeight+'px')}
+updateNavHeight();window.addEventListener('resize',updateNavHeight);
+const links=Array.from(document.querySelectorAll('.navlinks a[href^="#chapter-"]'));
+const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){links.forEach(link=>link.classList.toggle('active',link.getAttribute('href')==='#'+entry.target.id))}}},{rootMargin:'-25% 0px -65% 0px'});
+document.querySelectorAll('.chapter-banner').forEach(s=>observer.observe(s));
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>70),{passive:true});
+// 導覽列使用原生 anchor + CSS smooth scroll；scroll-padding-top 避免標題被黏性導覽列遮住。
+</script>
+</body>
+</html>
