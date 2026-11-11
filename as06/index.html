@@ -14,32 +14,42 @@
     html { scroll-behavior: smooth; }
     body { margin: 0; font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
 
-    /* 每個畫面都是 100vh，也就是瀏覽器視窗的完整高度。 */
+    /* 每個畫面都是 100vh：文字改為靠左、靠上，留下更多內文空間。 */
     .scene {
       position: relative;
       width: 100%;
       height: 100vh;
-      height: 100svh; /* 手機瀏覽器地址列伸縮時，視覺高度較穩定 */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 24px;
-      color: #fff9f0;
-      text-align: center;
+      height: 100svh; /* 手機瀏覽器地址列變化時較穩定 */
+      padding: clamp(88px, 15vh, 160px) clamp(26px, 8vw, 140px) 100px;
+      color: #fbf6e9; /* 類似和紙的米白色 */
+      text-align: left;
     }
 
-    /* 使用不同的飽和、但不刺眼的色塊。 */
-    .scene-1 { background: #54786b; } /* 森林綠 */
-    .scene-2 { background: #964d65; } /* 莓果紅 */
-    .scene-3 { background: #bb744e; } /* 暖陶橘 */
-    .scene-4 { background: #647b9b; } /* 霧藍 */
-    .scene-5 { background: #777e4e; } /* 橄欖綠 */
+    /* 參考日本傳統色：低彩度、穩重，但仍保有飽和感。 */
+    .scene-1 { background: #435d73; } /* 藍鼠色：沉穩藍灰 */
+    .scene-2 { background: #914f5e; } /* 蘇芳色：柔和深紅 */
+    .scene-3 { background: #ad7048; } /* 柿茶色：溫潤陶橘 */
+    .scene-4 { background: #526b5b; } /* 常磐綠：深綠色 */
+    .scene-5 { background: #75647f; } /* 藤煤竹意象：灰紫色 */
 
-    .content { max-width: 720px; }
-    .eyebrow { margin: 0 0 14px; letter-spacing: .22em; font-size: 13px; font-weight: 700; }
-    h1, h2 { font-size: clamp(42px, 7vw, 84px); line-height: 1.15; margin: 0 0 20px; letter-spacing: .03em; }
-    .description { margin: 0 auto; max-width: 540px; font-size: clamp(16px, 2.1vw, 20px); line-height: 1.9; }
-    .hint { margin-top: 34px; font-size: 13px; letter-spacing: .06em; opacity: .82; }
+    /* 內文使用較寬的欄位；以後增加段落時，有更充裕的書寫空間。 */
+    .content { width: 100%; max-width: 1080px; margin: 0 auto; }
+    .eyebrow { margin: 0 0 18px; letter-spacing: .22em; font-size: 13px; font-weight: 700; }
+    h1, h2 { font-size: clamp(42px, 6vw, 76px); line-height: 1.2; margin: 0 0 34px; letter-spacing: .04em; }
+    .description { margin: 0; max-width: 880px; font-size: clamp(17px, 1.8vw, 21px); line-height: 2; }
+
+    /* 每段最下方的小字維持水平置中，並靠近頁面底部。 */
+    .hint {
+      position: absolute;
+      bottom: clamp(18px, 3.2vh, 38px);
+      left: 20px;
+      right: 20px;
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: .06em;
+      text-align: center;
+      opacity: .83;
+    }
 
     /* ========== 2. Sticky 的重要原理 ========== */
     /*
@@ -72,9 +82,18 @@
     }
 
     @media (max-width: 600px) {
-      .scene { padding: 32px 22px; }
+      .scene { padding: clamp(82px, 14vh, 112px) 26px 88px; }
+      h1, h2 { margin-bottom: 26px; }
+      .description { font-size: 16px; line-height: 1.9; }
       .progress { top: 12px; right: 12px; font-size: 11px; padding: 8px 11px; }
-      .hint { margin-top: 24px; }
+      .hint { bottom: 20px; font-size: 12px; }
+    }
+    /* 手機橫向或高度較低的視窗：避免標題與底部提示太接近。 */
+    @media (max-height: 560px) {
+      .scene { padding-top: 60px; padding-bottom: 65px; }
+      h1, h2 { font-size: clamp(30px, 5vw, 52px); margin-bottom: 14px; }
+      .description { font-size: 14px; line-height: 1.6; }
+      .hint { bottom: 12px; font-size: 11px; }
     }
   </style>
 </head>
@@ -98,19 +117,19 @@
     <div class="scene scene-2" id="scene2">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 02</p>
-        <h2>莓果紅</h2>
+        <h2>蘇芳紅</h2>
         <p class="description">從這一段開始使用 Sticky-top。當色塊來到畫面頂端，它會暫時停留；即使你繼續向下滑動，也不會立刻進入下一段。</p>
         <p class="hint">繼續滑動，觀察畫面停留的時間</p>
       </div>
     </div>
   </div>
 
-  <!-- 第 3 段：同樣使用 sticky，顏色改為暖陶橘。 -->
+  <!-- 第 3 段：同樣使用 sticky，顏色改為柿茶色。 -->
   <div class="sticky-parent" id="parent3">
     <div class="scene scene-3" id="scene3">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 03</p>
-        <h2>暖陶橘</h2>
+        <h2>柿茶色</h2>
         <p class="description">這一段的父容器仍在移動，但 100vh 的色塊會留在視窗頂端。等到父容器的底部接近時，色塊才會離開。</p>
         <p class="hint">試著向上滑，看看能否返回前一段</p>
       </div>
@@ -122,7 +141,7 @@
     <div class="scene scene-4" id="scene4">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 04</p>
-        <h2>霧藍色</h2>
+        <h2>常磐綠</h2>
         <p class="description">第三個 Sticky-top 範例。這個固定效果不需要額外動畫，也不需要 jQuery 控制位置，單靠 CSS 就能完成。</p>
         <p class="hint">再往下滑，離開最後一個固定區塊</p>
       </div>
