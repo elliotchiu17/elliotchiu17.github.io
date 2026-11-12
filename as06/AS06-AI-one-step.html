@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky Scroll — 五幕捲動示範</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: 'Noto Sans TC', 'Microsoft JhengHei', system-ui, sans-serif; }
+    .section {
+      position: relative;
+      height: 100vh;
+      height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: clamp(24px, 6vw, 90px);
+      overflow: hidden;
+    }
+    .section__content { width: min(100%, 1050px); position: relative; z-index: 1; }
+    .eyebrow { font-size: clamp(12px, 1.2vw, 15px); font-weight: 700; letter-spacing: .24em; margin: 0 0 20px; }
+    h1 { font-size: clamp(64px, 12vw, 170px); line-height: 1; margin: 0 0 24px; font-weight: 800; letter-spacing: -.07em; }
+    h2 { font-size: clamp(37px, 7vw, 92px); line-height: 1.15; margin: 0 0 20px; font-weight: 750; letter-spacing: -.055em; }
+    .desc { font-size: clamp(16px, 1.8vw, 21px); line-height: 1.9; margin: 0; max-width: 560px; }
+    .number { position: absolute; bottom: clamp(20px, 4vw, 46px); right: clamp(24px, 6vw, 90px); font-size: clamp(70px, 15vw, 240px); font-weight: 800; letter-spacing: -.1em; line-height: .8; opacity: .10; pointer-events: none; }
+    .section--one { background: #f2eee6; color: #3f443f; z-index: 1; }
+    .section--two { background: #c6d3b5; color: #34433a; z-index: 2; }
+    .section--three { background: #e2b7b5; color: #653f47; z-index: 3; }
+    .section--four { background: #d8d1e7; color: #4a4566; z-index: 4; }
+    .section--five { background: #394c45; color: #f7f2e8; z-index: 5; }
+    /* 只有第二、三、四個區塊黏在視窗頂端；下一區塊依 z-index 向上蓋過它。 */
+    .section--sticky { position: sticky; top: 0; }
+    @media (max-width: 600px) {
+      .eyebrow { letter-spacing: .14em; }
+      .number { bottom: 28px; right: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="section section--one">
+      <div class="section__content"><p class="eyebrow">SCROLL STORY / 01</p><h1>SCROLL.</h1><p class="desc">第一幕｜一般垂直捲動。<br>向下滑動，讓這個畫面自然離開視窗。</p></div>
+      <span class="number" aria-hidden="true">01</span>
+    </div>
+    <div class="section section--two section--sticky">
+      <div class="section__content"><p class="eyebrow">STICKY CHAPTER / 02</p><h2>停留，<br>然後交棒。</h2><p class="desc">第二幕｜Sticky-top。<br>當這個區塊到達視窗頂端時，會暫時固定在原位，直到下一幕從下方滑入並覆蓋它。</p></div>
+      <span class="number" aria-hidden="true">02</span>
+    </div>
+    <div class="section section--three section--sticky">
+      <div class="section__content"><p class="eyebrow">STICKY CHAPTER / 03</p><h2>層層推進，<br>故事繼續。</h2><p class="desc">第三幕｜Sticky-top。<br>維持在視窗頂端，下一個區塊逐漸向上堆疊。</p></div>
+      <span class="number" aria-hidden="true">03</span>
+    </div>
+    <div class="section section--four section--sticky">
+      <div class="section__content"><p class="eyebrow">STICKY CHAPTER / 04</p><h2>再停一幕，<br>再往前走。</h2><p class="desc">第四幕｜Sticky-top。<br>這是最後一個採用固定頂端效果的區塊。</p></div>
+      <span class="number" aria-hidden="true">04</span>
+    </div>
+    <div class="section section--five">
+      <div class="section__content"><p class="eyebrow">THE END / 05</p><h2>自然收尾。</h2><p class="desc">第五幕｜一般垂直捲動。<br>不使用 Sticky-top，頁面在這裡結束。</p></div>
+      <span class="number" aria-hidden="true">05</span>
+    </div>
+  </main>
+</body>
+</html>
