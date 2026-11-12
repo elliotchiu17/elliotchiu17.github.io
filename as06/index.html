@@ -21,16 +21,16 @@
       height: 100vh;
       height: 100svh; /* 手機瀏覽器地址列變化時較穩定 */
       padding: clamp(88px, 15vh, 160px) clamp(26px, 8vw, 140px) 100px;
-      color: #fbf6e9; /* 類似和紙的米白色 */
+      color: #293443; /* 明亮背景搭配深墨藍字，讓小字也清楚易讀 */
       text-align: left;
     }
 
-    /* 參考日本傳統色：低彩度、穩重，但仍保有飽和感。 */
-    .scene-1 { background: #435d73; } /* 藍鼠色：沉穩藍灰 */
-    .scene-2 { background: #914f5e; } /* 蘇芳色：柔和深紅 */
-    .scene-3 { background: #ad7048; } /* 柿茶色：溫潤陶橘 */
-    .scene-4 { background: #526b5b; } /* 常磐綠：深綠色 */
-    .scene-5 { background: #75647f; } /* 藤煤竹意象：灰紫色 */
+    /* 現代日系廣告感：輕快、清亮、有彩度，但避開螢光色與灰濁色。 */
+    .scene-1 { background: #f09a78; } /* 蜜桃珊瑚：溫暖有精神 */
+    .scene-2 { background: #91bce5; } /* 清透晴空藍：明亮、乾淨 */
+    .scene-3 { background: #f2ce68; } /* 奶油柑橘黃：活潑柔和 */
+    .scene-4 { background: #a8cf8a; } /* 青蘋果綠：清新、有生命力 */
+    .scene-5 { background: #eaa1b6; } /* 櫻桃粉：俏皮而不甜膩 */
 
     /* 內文使用較寬的欄位；以後增加段落時，有更充裕的書寫空間。 */
     .content { width: 100%; max-width: 1080px; margin: 0 auto; }
@@ -64,28 +64,69 @@
     .sticky-parent { height: 250vh; height: 250svh; position: relative; }
     .sticky-parent .scene { position: sticky; top: 0; }
 
-    /* ========== 3. 小型進度顯示 ========== */
-    .progress {
+    /* ========== 3. 右上角段落選單 ========== */
+    /* 外層固定於右上角；按鈕可點擊，點開後顯示五個段落。 */
+    .part-nav {
       position: fixed;
       top: 18px;
       right: 18px;
-      z-index: 10;
-      padding: 10px 14px;
-      border: 1px solid rgba(255,255,255,.45);
-      border-radius: 999px;
-      background: rgba(27,32,32,.35);
-      color: #fff;
-      font-size: 12px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      pointer-events: none;
+      z-index: 20;
+      width: 185px;
+      font-size: 13px;
+      color: #293443;
     }
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 16px;
+      background: rgba(255,250,241,.92);
+      color: #293443;
+      font: inherit;
+      font-weight: 700;
+      letter-spacing: .06em;
+      cursor: pointer;
+      box-shadow: 0 5px 22px rgba(36,44,53,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .progress:hover, .progress:focus-visible { background: #fffaf1; }
+    .progress:focus-visible, .part-link:focus-visible { outline: 2px solid #293443; outline-offset: 2px; }
+    .nav-chevron { font-size: 12px; transition: transform .2s ease; }
+    .progress[aria-expanded="true"] .nav-chevron { transform: rotate(180deg); }
+    .part-menu {
+      margin-top: 8px;
+      padding: 7px;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 16px;
+      background: rgba(255,250,241,.97);
+      box-shadow: 0 8px 28px rgba(36,44,53,.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .part-menu[hidden] { display: none; }
+    .part-link {
+      display: block;
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 10px;
+      color: #293443;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+    .part-link:hover, .part-link.active { background: #e9e6dd; }
+    .part-link.active { font-weight: 700; }
 
     @media (max-width: 600px) {
       .scene { padding: clamp(82px, 14vh, 112px) 26px 88px; }
       h1, h2 { margin-bottom: 26px; }
       .description { font-size: 16px; line-height: 1.9; }
-      .progress { top: 12px; right: 12px; font-size: 11px; padding: 8px 11px; }
+      .part-nav { top: 12px; right: 12px; width: 168px; font-size: 12px; }
+      .progress { padding: 10px 12px; }
+      .part-link { padding: 10px; }
       .hint { bottom: 20px; font-size: 12px; }
     }
     /* 手機橫向或高度較低的視窗：避免標題與底部提示太接近。 */
@@ -99,8 +140,19 @@
 </head>
 <body>
 
-  <!-- 進度文字由下方的 jQuery 更新。 -->
-  <div class="progress" id="progress">PART 01 / 05</div>
+  <!-- 點右上角按鈕即可展開選單。ARIA 屬性也方便鍵盤與輔助工具操作。 -->
+  <nav class="part-nav" aria-label="快速切換段落">
+    <button type="button" class="progress" id="progress" aria-expanded="false" aria-controls="partMenu">
+      <span id="progressText">PART 01 / 05</span><span class="nav-chevron" aria-hidden="true">▾</span>
+    </button>
+    <div class="part-menu" id="partMenu" hidden>
+      <a class="part-link active" href="#scene1">PART 01 · 捲動的開始</a>
+      <a class="part-link" href="#parent2">PART 02 · 晴空藍</a>
+      <a class="part-link" href="#parent3">PART 03 · 奶油柑橘黃</a>
+      <a class="part-link" href="#parent4">PART 04 · 青蘋果綠</a>
+      <a class="part-link" href="#scene5">PART 05 · 旅程的結尾</a>
+    </div>
+  </nav>
 
   <!-- 第 1 段：一般捲動，不使用 sticky。 -->
   <div class="scene scene-1" id="scene1">
@@ -117,19 +169,19 @@
     <div class="scene scene-2" id="scene2">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 02</p>
-        <h2>蘇芳紅</h2>
+        <h2>晴空藍</h2>
         <p class="description">從這一段開始使用 Sticky-top。當色塊來到畫面頂端，它會暫時停留；即使你繼續向下滑動，也不會立刻進入下一段。</p>
         <p class="hint">繼續滑動，觀察畫面停留的時間</p>
       </div>
     </div>
   </div>
 
-  <!-- 第 3 段：同樣使用 sticky，顏色改為柿茶色。 -->
+  <!-- 第 3 段：同樣使用 sticky，顏色改為奶油柑橘黃。 -->
   <div class="sticky-parent" id="parent3">
     <div class="scene scene-3" id="scene3">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 03</p>
-        <h2>柿茶色</h2>
+        <h2>奶油柑橘黃</h2>
         <p class="description">這一段的父容器仍在移動，但 100vh 的色塊會留在視窗頂端。等到父容器的底部接近時，色塊才會離開。</p>
         <p class="hint">試著向上滑，看看能否返回前一段</p>
       </div>
@@ -141,7 +193,7 @@
     <div class="scene scene-4" id="scene4">
       <div class="content">
         <p class="eyebrow">SCROLL STUDY · PART 04</p>
-        <h2>常磐綠</h2>
+        <h2>青蘋果綠</h2>
         <p class="description">第三個 Sticky-top 範例。這個固定效果不需要額外動畫，也不需要 jQuery 控制位置，單靠 CSS 就能完成。</p>
         <p class="hint">再往下滑，離開最後一個固定區塊</p>
       </div>
@@ -159,30 +211,61 @@
   </div>
 
   <script>
-    // ========== 4. 最簡單的 jQuery 練習 ==========
-    // Sticky-top 效果已由 CSS 負責；這裡的 jQuery 只更新右上角目前的 PART 編號。
+    // ========== 4. jQuery：更新段落進度，以及點擊選單跳轉 ==========
+    // 第二～四段的 Sticky 效果仍然由 CSS 控制，沒有修改原本的捲動原理。
     $(function () {
+      var sections = ["#scene1", "#parent2", "#parent3", "#parent4", "#scene5"];
+      var menu = $("#partMenu");
+      var button = $("#progress");
+
       function updateProgress() {
-        // 取得視窗的垂直捲動位置，以及視窗中心所在的高度。
+        // 看視窗中心落在哪一個段落（Sticky 段落使用父容器的範圍）。
         var centerY = $(window).scrollTop() + $(window).height() / 2;
         var current = 1;
-
-        // 找出視窗中心目前位於哪個父容器或一般區塊的文件範圍。
-        var sections = ["#scene1", "#parent2", "#parent3", "#parent4", "#scene5"];
         $.each(sections, function (index, selector) {
           var section = $(selector);
           var top = section.offset().top;
           var bottom = top + section.outerHeight();
-          if (centerY >= top && centerY < bottom) {
-            current = index + 1;
-          }
+          if (centerY >= top && centerY < bottom) current = index + 1;
         });
-
-        // 將數字補成兩位，例如 2 會顯示為 02。
-        $("#progress").text("PART " + String(current).padStart(2, "0") + " / 05");
+        $("#progressText").text("PART " + String(current).padStart(2, "0") + " / 05");
+        $(".part-link").removeClass("active").removeAttr("aria-current")
+          .eq(current - 1).addClass("active").attr("aria-current", "location");
       }
 
-      // 第一次開啟頁面、捲動時、視窗大小改變時，都更新顯示。
+      // 按下右上角按鈕：展開或收合五個段落選項。
+      function closeMenu() {
+        menu.prop("hidden", true);
+        button.attr("aria-expanded", "false");
+      }
+      button.on("click", function () {
+        var opening = menu.prop("hidden");
+        menu.prop("hidden", !opening);
+        button.attr("aria-expanded", String(opening));
+      });
+
+      // 點選段落：先收起選單，再平滑移動至該段落的開頭。
+      // 第 2～4 段要移動到 parent 的頂部，而非 Sticky 元素當前的位置。
+      $(".part-link").on("click", function (event) {
+        event.preventDefault();
+        var target = $(this).attr("href");
+        var top = $(target).offset().top;
+        closeMenu();
+        $("html, body").stop().animate({ scrollTop: top }, 650);
+      });
+
+      // 點到選單之外或按下 Esc，就收合選單。
+      $(document).on("click", function (event) {
+        if (!$(event.target).closest(".part-nav").length) closeMenu();
+      });
+      $(document).on("keydown", function (event) {
+        if (event.key === "Escape" && !menu.prop("hidden")) {
+          closeMenu();
+          button.trigger("focus");
+        }
+      });
+
+      // 第一次開啟、捲動、調整視窗大小時，更新目前段落。
       updateProgress();
       $(window).on("scroll resize", updateProgress);
     });
