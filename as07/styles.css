@@ -5,3 +5,66 @@
 
 /* V2: complete county labels; emphasize only counties with county-administered cities */
 .region-card .region-names{display:flex;flex-wrap:wrap;gap:7px 6px;align-content:flex-start;margin-top:3px} .region-card .region-names span{display:inline-block;padding:3px 6px;border-radius:4px;line-height:1.5;color:#6a756d;font-size:12px} .region-card .region-names .city-highlight{font-weight:850;color:#315b43;background:linear-gradient(transparent 28%,rgba(146,186,148,.39) 28%,rgba(146,186,148,.39) 86%,transparent 86%)} .regional-exclusions{margin-top:18px} .regional-exclusions strong{color:#53675b;font-size:14px}.regional-exclusions p{margin:7px 0;font-size:14px;font-weight:650}.data-hint{font-size:12px;color:#6b796d;line-height:1.9;margin-top:20px}.incumbent-tag{display:inline-block;padding:5px 10px;margin-top:6px;border-radius:99px;background:#f2e8d7;color:#79613e;font-size:11px;font-weight:700}@media(max-width:600px){.region-card .region-names{gap:3px}.region-card .region-names span{font-size:11px;padding:2px 4px}}
+
+/* V2.5 readability & home editorial narrative; retain existing map and navigation behavior */
+:root{--body-lg:17px}
+.topbar nav{font-size:16px;gap:24px}.topbar nav a{padding:9px 2px}.brand{font-size:18px}.brand small{font-size:11px}.nav-tag{font-size:12px}
+.eyebrow{font-size:14px;letter-spacing:.13em}.hero{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:clamp(25px,4vw,60px);min-height:640px}.hero h1{font-size:clamp(37px,4.4vw,68px);line-height:1.35;letter-spacing:-.035em}.hero p,.intro p{font-size:17px;line-height:1.95;max-width:660px}.stat span{font-size:13px}.map-head,.map-status{font-size:13px}.scroll-cue{font-size:13px}
+.section-title{display:block;margin:70px 0 25px}.section-title h2{font-size:clamp(29px,3.3vw,43px)}.section-title p{max-width:none;margin:12px 0 0;font-size:16px;white-space:nowrap;line-height:1.6}
+.region-grid{gap:14px}.region-card{min-height:290px;padding:23px}.region-card h3{font-size:31px;margin:25px 0 13px}.region-card .accent{font-size:12px}.region-card .region-names{display:flex;gap:8px 6px}.region-card .region-names span{font-size:clamp(15px,1.22vw,17px);padding:4px 5px;line-height:1.5;font-weight:600}.region-card .region-names .city-highlight{font-weight:900;background:linear-gradient(transparent 17%,rgba(139,181,141,.42) 17%,rgba(139,181,141,.42) 88%,transparent 88%)}
+.source-line{font-size:clamp(13px,1.12vw,15px);line-height:1.65;white-space:nowrap;letter-spacing:-.02em}
+.crumb{font-size:14px}.list-heading span,.town-card .sub,.county-card .sub{font-size:14px}.regional-exclusions p{font-size:16px}.regional-exclusions span,.empty-card,.data-hint{font-size:14px}.back-link{font-size:15px}.person .tag{font-size:13px}.person p{font-size:15px}.town-lead p{font-size:16px}.incumbent-tag{font-size:13px}
+.context-section,.history-section{margin-top:76px}.context-heading,.history-heading{max-width:1140px}.context-heading h2,.history-heading h2{font:800 clamp(29px,3.6vw,47px)/1.35 'Noto Serif TC',serif;margin:13px 0 15px}.context-heading p,.history-heading p{color:var(--muted);font-size:17px;line-height:1.95;margin:0 0 27px}
+.comparison-panel,.history-chart{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:clamp(20px,3.5vw,40px);box-shadow:var(--shadow)}.comparison-key{display:flex;justify-content:end;gap:27px;margin-bottom:22px;font-size:15px;font-weight:700}.comparison-key span{display:flex;align-items:center;gap:8px}.comparison-key i{display:block;width:13px;height:13px;border-radius:3px}.key-blue{background:#4e7199}.key-green{background:#6c9d7b}.comparison-rows{display:grid;gap:15px}.comparison-row{display:grid;grid-template-columns:minmax(150px,235px) 1fr;gap:22px;align-items:center}.comparison-row>strong{font-size:16px}.bar-pair{display:grid;gap:5px}.bar-line{height:21px;display:flex;align-items:center;position:relative;background:#eeeDE6;border-radius:4px;overflow:hidden}.bar-filler{height:100%;min-width:3px;display:block;border-radius:4px;flex-shrink:0}.bar-filler.blue{background:#4e7199}.bar-filler.green{background:#6c9d7b}.bar-value{font-size:12px;font-weight:800;margin-left:9px;z-index:1}.chart-note{font-size:13px!important;line-height:1.75!important;color:var(--muted);margin:20px 0 0!important}
+.history-chart{display:grid;gap:25px}.history-item{display:grid;grid-template-columns:100px minmax(0,1fr) 110px;gap:24px;align-items:center}.history-year{font:700 30px Georgia,serif}.history-middle{display:grid;gap:9px}.history-track{height:31px;background:#eceee5;border-radius:6px;overflow:hidden}.history-nominations,.history-elected{display:flex;align-items:center;height:100%;padding-left:11px;white-space:nowrap;min-width:105px;font-size:14px;font-weight:700}.history-nominations{background:#abc7af;color:#284b34}.history-elected{background:#57836b;color:white}.history-rate{text-align:right}.history-rate b{font:700 30px Georgia,serif;color:#49725a;display:block}.history-rate small{font-size:13px;color:var(--muted)}.strategy-note{margin-top:26px;padding:26px 31px;border-left:4px solid #7b9d80;background:#e7ece0;border-radius:0 10px 10px 0}.strategy-note h3{font:800 clamp(23px,2.5vw,30px) 'Noto Serif TC',serif;margin:10px 0}.strategy-note p{font-size:17px;line-height:1.95;color:#52645a;margin:0}
+.footer{background:#e8eade}.footer-content{max-width:1390px;margin:auto;padding:65px clamp(25px,5vw,78px) 0}.footer h2{font-size:clamp(33px,4.5vw,53px)}.footer-cols{max-width:none;gap:30px;margin-top:25px}.footer-cols strong{font-size:20px}.footer-cols p{font-size:17px;line-height:1.9}.footer-links{display:flex;gap:13px;flex-wrap:wrap;margin-top:24px;text-decoration:none}.footer-links a{padding:14px 20px;background:#faf9f3;border:1px solid #aebfaf;border-radius:8px;font-size:16px;font-weight:700;transition:background .2s,transform .2s}.footer-links a:hover{background:#d3e0d1;transform:translateY(-2px)}.footer-links span{margin-left:12px}.about-inner{padding-bottom:42px}.ai-statement{min-height:100vh;background:transparent;color:var(--ink);padding:55px 0 35px;justify-content:center;border-top:1px solid #c8d2c4}.ai-statement .eyebrow{color:var(--green)}.ai-statement p{max-width:none;font-size:18px;line-height:2;color:#52645a}.footer-bottom{font-size:13px;color:#617869;margin-top:25px}
+@media(max-width:1100px){.section-title p,.source-line{white-space:normal}.region-card .region-names span{font-size:16px}.hero{grid-template-columns:1fr;min-height:unset}.hero .map-shell{order:-1}.region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.topbar nav{font-size:14px;gap:12px}.brand{font-size:15px}.brand small{font-size:9px}.eyebrow{font-size:12px}.hero h1{font-size:clamp(34px,8vw,45px);margin:21px 0}.hero p,.intro p{font-size:16px}.section-title h2{font-size:29px}.section-title p{font-size:15px;white-space:normal}.region-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.region-card{padding:15px;min-height:265px}.region-card h3{font-size:23px;margin:18px 0 11px}.region-card .num{font-size:12px}.region-card .region-names{gap:4px}.region-card .region-names span{font-size:15px;padding:2px 3px}.region-card .accent{position:static;align-self:start;margin-top:8px;font-size:11px}.source-line{font-size:14px;white-space:normal}.comparison-row{grid-template-columns:1fr;gap:6px}.comparison-row>strong{font-size:15px}.comparison-rows{gap:19px}.comparison-key{font-size:13px}.history-item{grid-template-columns:55px minmax(0,1fr) 74px;gap:10px}.history-year{font-size:18px}.history-rate b{font-size:20px}.history-rate small{font-size:11px}.history-nominations,.history-elected{font-size:11px;min-width:75px;padding-left:5px}.strategy-note{padding:21px}.strategy-note p{font-size:16px}.footer-content{padding:44px 21px 0}.footer-cols{grid-template-columns:1fr;gap:12px}.footer-cols p{font-size:16px}.ai-statement{padding:40px 0 30px}.ai-statement p{font-size:16px}.nav-tag{display:none}.region-card .arrow{font-size:22px}}
+@media(max-width:370px){.region-grid{grid-template-columns:1fr}.region-card{min-height:165px}}
+
+/* V2 complete — legibility, compact boundaries, and scroll-triggered chart motion */
+.region-card .region-names span,.region-card .region-names .city-highlight{color:#263b33;font-weight:750}
+.region-card .region-names .city-highlight{font-weight:850;background:linear-gradient(transparent 18%,rgba(244,216,122,.56) 18%,rgba(244,216,122,.56) 88%,transparent 88%)}
+/* Both parties share the same absolute scale within each office category: KMT + DPP = full track */
+.comparison-rows{gap:0}.comparison-row{padding:15px 0;position:relative}.comparison-row:first-child{padding-top:4px}.comparison-row.comparison-separated{border-top:1px dashed #cbd3cd}
+.bar-pair{gap:7px}.bar-line{height:24px;display:flex;align-items:center;gap:10px;background:transparent;overflow:visible;border-radius:0}
+.bar-track{display:block;flex:1;min-width:0;height:19px;background:#e8eae5;border-radius:4px;overflow:hidden}
+.bar-filler{height:100%;width:0;min-width:0;display:block;border-radius:4px;transition:width 1250ms cubic-bezier(.19,1,.22,1)}
+.comparison-panel.is-visible .bar-filler{width:var(--target-width)}
+.bar-value{width:63px;flex:0 0 63px;font-size:15px;line-height:1;font-weight:850;color:#30433a;margin:0;text-align:left;font-variant-numeric:tabular-nums}
+.history-chart{gap:0}.history-item{padding:20px 0;border-bottom:1px dashed #cbd3cd}.history-item:first-child{padding-top:0}.history-item:last-child{padding-bottom:0;border-bottom:none}
+.history-middle{gap:10px}.history-track{height:31px;background:transparent;border-radius:0;display:flex;align-items:center;gap:12px;overflow:visible}.history-label{min-width:112px;font-size:15px;font-weight:750;color:#354b3d;white-space:nowrap}.history-label b{font-size:18px;font-variant-numeric:tabular-nums}.history-rail{display:block;flex:1;min-width:0;height:22px;background:#e8eae5;border-radius:5px;overflow:hidden}
+.history-bar{display:block;width:0;min-width:0;height:100%;border-radius:5px;transition:width 1300ms cubic-bezier(.19,1,.22,1);transition-delay:100ms}
+.history-chart.is-visible .history-bar{width:var(--target-width)}
+.history-nominations{background:#a7c6ac}.history-elected{background:#527f66}
+/* Reduce the padding at the end of the content and remove the oversized empty footer edges.
+   Retain the 100vh AI final-page section required by the assignment. */
+.home-page{padding-bottom:28px}.home-page>.source-line{margin:18px 0 0;font-size:clamp(14px,1.1vw,16px)}
+.footer-content{padding-top:30px}.about-inner{padding-bottom:20px}.footer-cols{margin-top:16px}.footer-links{margin-top:15px}
+.ai-statement{min-height:100vh;padding:18px 0 18px;justify-content:space-between;gap:12px}
+.ai-statement h2{margin:4px 0 6px}.ai-statement p{margin:0;line-height:1.8;font-size:18px}.ai-statement .footer-bottom{margin:8px 0 0}
+@media(max-width:650px){.comparison-row{padding:13px 0}.bar-value{font-size:14px;width:48px;flex-basis:48px}.history-item{padding:17px 0}.history-label{min-width:82px;font-size:12px}.history-label b{font-size:15px}.history-track{gap:7px}.history-rail{height:20px}.footer-content{padding-top:24px}.about-inner{padding-bottom:16px}.ai-statement{padding:16px 0}.ai-statement p{font-size:16px}.home-page{padding-bottom:20px}.home-page>.source-line{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.bar-filler,.history-bar{transition:none!important;width:var(--target-width)!important}}
+
+/* V2 完整版：依使用者回饋調整淺綠標記與 AI 區塊的實際高度 */
+.region-card .region-names .city-highlight {
+  color:#263b33;
+  background:linear-gradient(transparent 18%,rgba(163,194,164,.24) 18%,rgba(163,194,164,.24) 88%,transparent 88%);
+}
+/* 不再以 100vh 撐開短篇聲明，也不使用 space-between 拉開段落。 */
+.ai-statement {
+  height:auto;
+  min-height:0;
+  padding:22px 0 24px;
+  display:block;
+  border-top:1px solid #c8d2c4;
+}
+.ai-statement .eyebrow {display:block;margin:0 0 9px;}
+.ai-statement h2 {margin:0 0 14px;}
+.ai-statement p {margin:0 0 12px;line-height:1.85;}
+.ai-statement .footer-bottom {display:block;margin:17px 0 0;}
+@media(max-width:650px){
+  .ai-statement{height:auto;min-height:0;padding:19px 0 22px;}
+  .ai-statement h2{margin:0 0 12px;}
+  .ai-statement p{margin:0 0 11px;line-height:1.85;}
+}
